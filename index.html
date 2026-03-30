@@ -1,0 +1,2745 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>QuantumShield — PNB Cybersecurity Intelligence Platform</title>
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;700;800;900&family=IBM+Plex+Sans:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&family=Chakra+Petch:wght@600;700&display=swap" rel="stylesheet">
+<style>
+/* ══════════════════════════════════════════════
+   DESIGN SYSTEM — QUANTUMSHIELD DEEP BLUE CINEMATIC
+══════════════════════════════════════════════ */
+:root {
+  /* Core palette — deep blue cinematic */
+  --maroon:       #1a3a7a;
+  --maroon-deep:  #0d1e4a;
+  --red:          #1e4fa8;
+  --red-glow:     rgba(30,79,168,0.35);
+  --gold:         #4a9fff;
+  --gold-light:   #7bbfff;
+  --gold-pale:    rgba(74,159,255,0.12);
+  --amber:        #2d7ae0;
+  --navy:         #080f1e;
+  --navy-mid:     #0d1830;
+  --navy-light:   #101e38;
+  --surface-1:    rgba(13,24,56,0.75);
+  --surface-2:    rgba(18,30,65,0.65);
+  --surface-3:    rgba(26,42,80,0.55);
+  --glass-border: rgba(255,255,255,0.08);
+  --glass-border-gold: rgba(74,159,255,0.3);
+  --text-1:       #eef2ff;
+  --text-2:       #9aafd4;
+  --text-3:       #526080;
+  --success:      #1DB87A;
+  --warning:      #E07B12;
+  --danger:       #E23442;
+  --info:         #4a9fff;
+  /* Risks */
+  --risk-critical: #FF3B4A;
+  --risk-high:     #FF7A2F;
+  --risk-medium:   #F0B429;
+  --risk-low:      #1DB87A;
+  /* Hero */
+  --hero-bg:      #21346e;
+}
+
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'IBM Plex Sans', sans-serif;
+  background: var(--navy);
+  color: var(--text-1);
+  min-height: 100vh;
+  overflow-x: hidden;
+  position: relative;
+}
+
+/* Animated background mesh */
+body::before {
+  content: '';
+  position: fixed; inset: 0;
+  background:
+    radial-gradient(ellipse 60% 50% at 10% 20%, rgba(30,79,168,0.2) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 60% at 90% 80%, rgba(74,159,255,0.08) 0%, transparent 60%),
+    radial-gradient(ellipse 40% 40% at 50% 50%, rgba(13,24,56,0.8) 0%, transparent 100%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Grid texture overlay */
+body::after {
+  content: '';
+  position: fixed; inset: 0;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.015) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.015) 1px, transparent 1px);
+  background-size: 40px 40px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ── SCROLLBAR ── */
+::-webkit-scrollbar { width: 4px; height: 4px; }
+::-webkit-scrollbar-track { background: var(--navy-mid); }
+::-webkit-scrollbar-thumb { background: #1e4fa8; border-radius: 2px; }
+
+/* ══════════════════
+   APP SHELL
+══════════════════ */
+.app { display: flex; min-height: 100vh; position: relative; z-index: 1; }
+
+/* ── SIDEBAR ── */
+.sidebar {
+  width: 220px;
+  min-height: 100vh;
+  background: linear-gradient(180deg, #0a1535 0%, #0d1e4a 40%, #0a1535 100%);
+  border-right: 1px solid rgba(74,159,255,0.15);
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  top: 0; left: 0; bottom: 0;
+  z-index: 200;
+}
+.sidebar-logo {
+  padding: 22px 20px 18px;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+.logo-shield {
+  width: 42px; height: 42px;
+  background: linear-gradient(135deg, #4a9fff 0%, #1e4fa8 100%);
+  border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Rubik', sans-serif;
+  font-weight: 800; font-size: 15px;
+  color: #fff;
+  margin-bottom: 10px;
+  box-shadow: 0 4px 20px rgba(74,159,255,0.4);
+}
+.logo-name {
+  font-family: 'Chakra Petch', sans-serif;
+  font-size: 13px; font-weight: 700;
+  color: var(--text-1);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+.logo-sub { font-family: 'IBM Plex Sans', sans-serif; font-size: 10px; color: var(--text-3); letter-spacing: 0.5px; margin-top: 2px; }
+.nav-section-label {
+  font-size: 9px; font-weight: 600;
+  color: var(--text-3);
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  padding: 16px 20px 6px;
+  font-family: 'IBM Plex Sans', sans-serif;
+}
+.nav-item {
+  display: flex; align-items: center; gap: 10px;
+  padding: 10px 20px;
+  cursor: pointer;
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-size: 13px; font-weight: 400;
+  color: rgba(255,255,255,0.55);
+  border-left: 2px solid transparent;
+  transition: all 0.2s;
+  position: relative;
+}
+.nav-item:hover { color: var(--text-1); background: rgba(255,255,255,0.04); }
+.nav-item.active {
+  color: var(--gold-light);
+  border-left-color: var(--gold);
+  background: rgba(74,159,255,0.1);
+  font-weight: 500;
+}
+.nav-item.active::after {
+  content: '';
+  position: absolute; right: 0; top: 50%; transform: translateY(-50%);
+  width: 3px; height: 60%;
+  background: var(--gold);
+  border-radius: 2px 0 0 2px;
+}
+.nav-dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--text-3); flex-shrink: 0;
+}
+.nav-item.active .nav-dot { background: var(--gold); box-shadow: 0 0 8px var(--gold); }
+.sidebar-footer {
+  margin-top: auto;
+  padding: 16px 20px;
+  border-top: 1px solid rgba(255,255,255,0.06);
+  font-size: 11px;
+  color: var(--text-3);
+}
+
+/* ── MAIN AREA ── */
+.main-area {
+  margin-left: 220px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* ── TOPBAR ── */
+.topbar {
+  height: 60px;
+  background: rgba(8,13,26,0.85);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--glass-border);
+  display: flex; align-items: center;
+  padding: 0 28px;
+  gap: 16px;
+  position: sticky; top: 0; z-index: 100;
+}
+.topbar-search {
+  flex: 1; max-width: 380px;
+  display: flex; align-items: center; gap: 8px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid var(--glass-border);
+  border-radius: 10px;
+  padding: 8px 14px;
+  transition: border-color 0.2s;
+}
+.topbar-search:focus-within { border-color: rgba(74,159,255,0.4); }
+.topbar-search input {
+  flex: 1; background: transparent; border: none; outline: none;
+  font-size: 13px; color: var(--text-1);
+  font-family: 'IBM Plex Sans', sans-serif;
+}
+.topbar-search input::placeholder { color: var(--text-3); }
+.topbar-search .srch-icon { font-size: 14px; color: var(--text-3); }
+.topbar-spacer { flex: 1; }
+.scan-timestamp {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px; color: var(--text-3);
+  display: flex; align-items: center; gap: 6px;
+}
+.scan-timestamp .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--success); animation: pulse-dot 2s infinite; }
+@keyframes pulse-dot { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.5;transform:scale(1.3)} }
+.notif-btn {
+  width: 36px; height: 36px; border-radius: 10px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid var(--glass-border);
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; font-size: 15px;
+  transition: background 0.2s;
+  position: relative;
+}
+.notif-btn:hover { background: rgba(255,255,255,0.08); }
+.notif-badge {
+  position: absolute; top: -4px; right: -4px;
+  width: 16px; height: 16px; border-radius: 50%;
+  background: var(--risk-critical);
+  font-size: 9px; font-weight: 700; color: #fff;
+  display: flex; align-items: center; justify-content: center;
+  border: 1.5px solid var(--navy);
+}
+.btn-scan {
+  display: flex; align-items: center; gap: 7px;
+  background: linear-gradient(135deg, #1a3a7a 0%, #1e4fa8 100%);
+  border: 1px solid rgba(74,159,255,0.4);
+  border-radius: 10px;
+  padding: 8px 18px;
+  font-family: 'Chakra Petch', sans-serif;
+  font-size: 11px; font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: #fff; cursor: pointer;
+  box-shadow: 0 4px 16px rgba(74,159,255,0.25);
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+.btn-scan:hover { box-shadow: 0 4px 24px rgba(74,159,255,0.4); transform: translateY(-1px); }
+.user-pill {
+  display: flex; align-items: center; gap: 8px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid var(--glass-border);
+  border-radius: 20px; padding: 4px 12px 4px 4px;
+  cursor: pointer;
+}
+.user-avatar {
+  width: 28px; height: 28px; border-radius: 50%;
+  background: linear-gradient(135deg, #4a9fff 0%, #1e4fa8 100%);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 11px; font-weight: 700; color: #fff;
+}
+.user-name { font-size: 12px; color: var(--text-2); }
+
+/* ── PAGE CONTENT ── */
+.page { padding: 28px; display: none; }
+.page.active { display: block; }
+
+/* ══════════════════════
+   GLASS CARD BASE
+══════════════════════ */
+.g-card {
+  background: var(--surface-1);
+  backdrop-filter: blur(16px);
+  border: 1px solid var(--glass-border);
+  border-radius: 18px;
+  position: relative;
+  overflow: hidden;
+}
+.g-card::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.12), transparent);
+}
+.g-card.gold-accent { border-color: var(--glass-border-gold); }
+.g-card.gold-accent::before {
+  background: linear-gradient(90deg, transparent, rgba(74,159,255,0.4), transparent);
+}
+
+/* ══════════════════════════
+   HOME SCREEN
+══════════════════════════ */
+
+/* Page header */
+.page-header {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 24px;
+}
+.page-title {
+  font-family: 'Rubik', sans-serif;
+  font-size: 22px; font-weight: 700;
+  color: var(--text-1);
+  letter-spacing: -0.5px;
+}
+.page-sub { font-family: 'IBM Plex Sans', sans-serif; font-size: 12px; color: var(--text-3); margin-top: 3px; letter-spacing: 0.2px; }
+.header-actions { display: flex; gap: 8px; align-items: center; }
+
+/* KPI CARDS */
+.kpi-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 16px; margin-bottom: 24px; }
+.kpi-card {
+  background: var(--surface-1);
+  backdrop-filter: blur(16px);
+  border: 1px solid var(--glass-border);
+  border-radius: 18px;
+  padding: 20px;
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform 0.25s, box-shadow 0.25s, border-color 0.25s;
+  animation: fadeSlideUp 0.5s both;
+}
+.kpi-card:nth-child(1){animation-delay:0.05s}
+.kpi-card:nth-child(2){animation-delay:0.1s}
+.kpi-card:nth-child(3){animation-delay:0.15s}
+.kpi-card:nth-child(4){animation-delay:0.2s}
+@keyframes fadeSlideUp {
+  from{opacity:0;transform:translateY(16px)} to{opacity:1;transform:translateY(0)}
+}
+.kpi-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(74,159,255,0.3);
+  box-shadow: 0 12px 40px rgba(0,0,0,0.4);
+}
+.kpi-card::after {
+  content: '';
+  position: absolute; bottom: 0; left: 0; right: 0;
+  height: 3px;
+  border-radius: 0 0 18px 18px;
+}
+.kpi-card.k-blue::after { background: linear-gradient(90deg, var(--info), transparent); }
+.kpi-card.k-gold::after { background: linear-gradient(90deg, var(--gold), transparent); }
+.kpi-card.k-amber::after { background: linear-gradient(90deg, var(--amber), transparent); }
+.kpi-card.k-danger::after { background: linear-gradient(90deg, var(--risk-critical), transparent); }
+.kpi-top { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 14px; }
+.kpi-icon {
+  width: 40px; height: 40px; border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px;
+}
+.kpi-icon.k-blue { background: rgba(74,159,255,0.15); border: 1px solid rgba(74,159,255,0.2); }
+.kpi-icon.k-gold { background: rgba(74,159,255,0.12); border: 1px solid rgba(74,159,255,0.2); }
+.kpi-icon.k-amber { background: rgba(45,122,224,0.15); border: 1px solid rgba(45,122,224,0.2); }
+.kpi-icon.k-danger { background: rgba(226,52,66,0.15); border: 1px solid rgba(226,52,66,0.2); }
+.kpi-trend {
+  display: flex; align-items: center; gap: 3px;
+  font-size: 11px; font-weight: 600;
+  padding: 2px 8px; border-radius: 20px;
+}
+.kpi-trend.up { color: var(--success); background: rgba(29,184,122,0.1); }
+.kpi-trend.down { color: var(--risk-critical); background: rgba(226,52,66,0.1); }
+.kpi-value {
+  font-family: 'Rubik', sans-serif;
+  font-size: 34px; font-weight: 800;
+  color: var(--text-1); line-height: 1;
+  letter-spacing: -1.5px;
+  margin-bottom: 4px;
+}
+.kpi-label { font-family: 'IBM Plex Sans', sans-serif; font-size: 11px; font-weight: 500; color: var(--text-3); letter-spacing: 0.6px; text-transform: uppercase; }
+.kpi-sparkline { margin-top: 12px; }
+
+/* HOME GRID */
+.home-grid { display: grid; grid-template-columns: 1fr 1.5fr; gap: 16px; }
+.left-col { display: flex; flex-direction: column; gap: 16px; }
+.right-col { display: flex; flex-direction: column; gap: 16px; }
+.card-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 18px 20px 14px;
+  border-bottom: 1px solid var(--glass-border);
+}
+.card-title {
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-size: 13px; font-weight: 600;
+  color: var(--text-1); letter-spacing: 0.4px;
+  text-transform: uppercase;
+}
+.card-badge {
+  font-size: 10px; font-weight: 600;
+  padding: 2px 8px; border-radius: 20px;
+  background: rgba(74,159,255,0.12);
+  color: var(--gold-light);
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+.card-body { padding: 16px 20px; }
+
+/* DONUT CHART */
+.donut-container {
+  display: flex; align-items: center; gap: 20px;
+}
+.donut-wrap { position: relative; flex-shrink: 0; }
+.donut-center {
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+}
+.donut-num {
+  font-family: 'Rubik', sans-serif;
+  font-size: 24px; font-weight: 800; color: var(--text-1);
+  letter-spacing: -1px;
+}
+.donut-lbl { font-family: 'IBM Plex Sans', sans-serif; font-size: 10px; color: var(--text-3); letter-spacing: 0.5px; text-transform: uppercase; }
+.legend-list { flex: 1; }
+.legend-item {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 9px;
+  font-size: 12px;
+}
+.legend-left { display: flex; align-items: center; gap: 8px; }
+.legend-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+.legend-name { font-family: 'IBM Plex Sans', sans-serif; color: var(--text-2); font-size: 12px; }
+.legend-val { font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: var(--text-1); font-weight: 500; }
+
+/* RISK BARS */
+.risk-row {
+  display: flex; align-items: center; gap: 10px;
+  margin-bottom: 10px;
+}
+.risk-label { font-family: 'IBM Plex Sans', sans-serif; font-size: 11px; font-weight: 500; color: var(--text-2); min-width: 60px; letter-spacing: 0.3px; }
+.risk-track {
+  flex: 1; height: 8px;
+  background: rgba(255,255,255,0.05);
+  border-radius: 4px; overflow: hidden;
+}
+.risk-fill { height: 100%; border-radius: 4px; position: relative; }
+.risk-fill::after {
+  content: '';
+  position: absolute; inset: 0;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2));
+}
+.risk-pct { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--text-3); min-width: 36px; text-align: right; }
+
+/* CERT TIMELINE */
+.cert-item {
+  display: flex; align-items: center; gap: 12px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--glass-border);
+}
+.cert-item:last-child { border-bottom: none; }
+.cert-dot-wrap {
+  width: 32px; height: 32px; border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0; font-size: 14px;
+}
+.cert-info { flex: 1; }
+.cert-name { font-family: 'IBM Plex Sans', sans-serif; font-size: 13px; color: var(--text-1); font-weight: 500; }
+.cert-days { font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: var(--text-3); margin-top: 2px; letter-spacing: 0.3px; }
+.cert-count {
+  font-family: 'Rubik', sans-serif;
+  font-size: 20px; font-weight: 800;
+  letter-spacing: -1px;
+}
+
+/* ACTIVITY FEED */
+.activity-item {
+  display: flex; align-items: flex-start; gap: 10px;
+  padding: 10px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+  animation: fadeIn 0.4s both;
+}
+.activity-item:last-child { border-bottom: none; }
+.act-icon {
+  width: 28px; height: 28px; border-radius: 7px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 12px; flex-shrink: 0;
+}
+.act-text { flex: 1; font-family: 'IBM Plex Sans', sans-serif; font-size: 12px; color: var(--text-2); line-height: 1.55; }
+.act-text strong { color: var(--text-1); font-weight: 600; }
+.act-time { font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: var(--text-3); flex-shrink: 0; letter-spacing: 0.2px; }
+
+/* ASSET MINI TABLE */
+.mini-table { width: 100%; border-collapse: collapse; font-size: 12px; }
+.mini-table th {
+  color: var(--text-3); font-weight: 600; font-size: 9px;
+  font-family: 'IBM Plex Sans', sans-serif;
+  letter-spacing: 1.2px; text-transform: uppercase;
+  padding: 8px 12px; text-align: left;
+  border-bottom: 1px solid var(--glass-border);
+}
+.mini-table td {
+  padding: 10px 12px;
+  border-bottom: 1px solid rgba(255,255,255,0.03);
+  color: var(--text-2);
+  vertical-align: middle;
+}
+.mini-table tr:hover td { background: rgba(255,255,255,0.02); }
+.mini-table tr:last-child td { border-bottom: none; }
+
+/* GEO MAP */
+.geo-canvas {
+  background: rgba(5,10,22,0.8);
+  border-radius: 12px;
+  position: relative;
+  overflow: hidden;
+  min-height: 160px;
+}
+.geo-pin {
+  position: absolute;
+  display: flex; flex-direction: column; align-items: center;
+  cursor: pointer;
+}
+.geo-ring {
+  width: 12px; height: 12px; border-radius: 50%;
+  position: relative;
+}
+.geo-ring::after {
+  content: '';
+  position: absolute; inset: -4px;
+  border-radius: 50%;
+  border: 1.5px solid currentColor;
+  animation: geo-pulse 2s infinite;
+  opacity: 0.5;
+}
+.geo-ring::before {
+  content: '';
+  position: absolute; inset: -8px;
+  border-radius: 50%;
+  border: 1px solid currentColor;
+  animation: geo-pulse 2s 0.5s infinite;
+  opacity: 0.2;
+}
+@keyframes geo-pulse { 0%{transform:scale(0.6);opacity:0.8} 100%{transform:scale(1.6);opacity:0} }
+.geo-label {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 9px; color: var(--text-3);
+  margin-top: 4px; letter-spacing: 0.8px;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+/* PILLS / BADGES */
+.pill {
+  display: inline-flex; align-items: center; gap: 4px;
+  padding: 2px 8px; border-radius: 20px;
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-size: 10px; font-weight: 600;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+}
+.pill-critical { background: rgba(255,59,74,0.15); color: var(--risk-critical); border: 1px solid rgba(255,59,74,0.25); }
+.pill-high { background: rgba(255,122,47,0.15); color: var(--risk-high); border: 1px solid rgba(255,122,47,0.25); }
+.pill-medium { background: rgba(240,180,41,0.15); color: var(--risk-medium); border: 1px solid rgba(240,180,41,0.25); }
+.pill-low { background: rgba(29,184,122,0.15); color: var(--risk-low); border: 1px solid rgba(29,184,122,0.25); }
+.pill-new { background: rgba(58,159,224,0.15); color: var(--info); border: 1px solid rgba(58,159,224,0.25); }
+.pill-confirmed { background: rgba(29,184,122,0.15); color: var(--success); border: 1px solid rgba(29,184,122,0.25); }
+.pill-fp { background: rgba(106,102,122,0.2); color: var(--text-3); border: 1px solid rgba(106,102,122,0.25); }
+.pill-valid { background: rgba(29,184,122,0.12); color: var(--success); }
+.pill-expiring { background: rgba(240,180,41,0.12); color: var(--risk-medium); }
+.pill-expired { background: rgba(255,59,74,0.12); color: var(--risk-critical); }
+
+/* ══════════════════════════════
+   ASSET INVENTORY SCREEN
+══════════════════════════════ */
+.inv-kpi-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 14px; margin-bottom: 24px; }
+.inv-kpi {
+  background: var(--surface-1);
+  backdrop-filter: blur(16px);
+  border: 1px solid var(--glass-border);
+  border-radius: 16px;
+  padding: 18px;
+  cursor: pointer;
+  transition: all 0.25s;
+  position: relative;
+  overflow: hidden;
+}
+.inv-kpi:hover { transform: translateY(-3px); box-shadow: 0 8px 30px rgba(0,0,0,0.4); }
+.inv-kpi.active { border-color: var(--glass-border-gold); background: rgba(74,159,255,0.08); }
+.inv-kpi::after {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; height: 2px;
+}
+.inv-kpi.c-blue::after { background: var(--info); }
+.inv-kpi.c-gold::after { background: var(--gold); }
+.inv-kpi.c-amber::after { background: var(--amber); }
+.inv-kpi.c-green::after { background: var(--success); }
+.inv-kpi-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
+.inv-kpi-icon { font-size: 22px; }
+.inv-kpi-trend { font-size: 10px; font-weight: 600; padding: 2px 6px; border-radius: 10px; }
+.inv-kpi-trend.up { color: var(--success); background: rgba(29,184,122,0.1); }
+.inv-kpi-trend.down { color: var(--risk-critical); background: rgba(255,59,74,0.1); }
+.inv-kpi-val {
+  font-family: 'Rubik', sans-serif;
+  font-size: 30px; font-weight: 800;
+  color: var(--text-1); line-height: 1;
+  letter-spacing: -1.5px;
+  margin-bottom: 3px;
+}
+.inv-kpi-lbl { font-family: 'IBM Plex Sans', sans-serif; font-size: 11px; font-weight: 500; color: var(--text-3); letter-spacing: 0.6px; text-transform: uppercase; }
+
+/* FILTER BAR */
+.filter-bar {
+  display: flex; align-items: center; gap: 10px;
+  padding: 14px 20px;
+  border-bottom: 1px solid var(--glass-border);
+  flex-wrap: wrap;
+}
+.filter-search {
+  display: flex; align-items: center; gap: 8px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid var(--glass-border);
+  border-radius: 8px; padding: 7px 12px;
+  flex: 1; max-width: 260px;
+}
+.filter-search input {
+  background: transparent; border: none; outline: none;
+  font-size: 12px; color: var(--text-1);
+  font-family: 'IBM Plex Sans', sans-serif; width: 100%;
+}
+.filter-search input::placeholder { color: var(--text-3); }
+.filter-select {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid var(--glass-border);
+  border-radius: 8px; padding: 7px 10px;
+  font-size: 12px; color: var(--text-2);
+  font-family: 'IBM Plex Sans', sans-serif;
+  outline: none; cursor: pointer;
+  -webkit-appearance: none;
+  min-width: 110px;
+}
+.filter-spacer { flex: 1; }
+.btn-sm {
+  display: flex; align-items: center; gap: 5px;
+  padding: 7px 14px; border-radius: 8px;
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-size: 11px; font-weight: 600;
+  letter-spacing: 0.6px; text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+.btn-sm-ghost {
+  background: transparent;
+  border: 1px solid var(--glass-border);
+  color: var(--text-2);
+}
+.btn-sm-ghost:hover { background: rgba(255,255,255,0.05); color: var(--text-1); }
+.btn-sm-gold {
+  background: linear-gradient(135deg, #1e4fa8 0%, #4a9fff 100%);
+  border: none; color: #fff; font-weight: 700;
+  box-shadow: 0 4px 12px rgba(74,159,255,0.3);
+}
+.btn-sm-gold:hover { box-shadow: 0 4px 20px rgba(74,159,255,0.5); transform: translateY(-1px); }
+
+/* TAB BAR */
+.tab-bar {
+  display: flex; gap: 2px;
+  padding: 12px 20px 0;
+  border-bottom: 1px solid var(--glass-border);
+}
+.tab {
+  padding: 8px 18px;
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-size: 11px; font-weight: 600; color: var(--text-3);
+  letter-spacing: 0.8px; text-transform: uppercase;
+  cursor: pointer; border-bottom: 2px solid transparent;
+  margin-bottom: -1px; transition: all 0.2s;
+  border-radius: 6px 6px 0 0;
+}
+.tab:hover { color: var(--text-2); background: rgba(255,255,255,0.02); }
+.tab.active { color: var(--gold-light); border-bottom-color: var(--gold); background: rgba(74,159,255,0.06); }
+
+/* DATA TABLE */
+.data-table-wrap { overflow-x: auto; }
+.data-tbl { width: 100%; border-collapse: collapse; font-size: 12px; min-width: 700px; }
+.data-tbl th {
+  color: var(--text-3); font-weight: 600; font-size: 10px;
+  letter-spacing: 1.2px; text-transform: uppercase;
+  padding: 10px 14px; text-align: left;
+  background: rgba(255,255,255,0.02);
+  border-bottom: 1px solid var(--glass-border);
+  white-space: nowrap; cursor: pointer;
+  user-select: none;
+  font-family: 'IBM Plex Sans', sans-serif;
+}
+.data-tbl th:hover { color: var(--text-2); }
+.sort-icon { opacity: 0.4; margin-left: 4px; }
+.data-tbl td {
+  padding: 11px 14px;
+  border-bottom: 1px solid rgba(255,255,255,0.025);
+  color: var(--text-2); vertical-align: middle;
+}
+.data-tbl tr:hover td {
+  background: rgba(255,255,255,0.025);
+  color: var(--text-1);
+}
+.data-tbl tr:last-child td { border-bottom: none; }
+.mono { font-family: 'IBM Plex Mono', monospace; font-size: 11px; }
+.tbl-name { font-family: 'IBM Plex Sans', sans-serif; color: var(--text-1); font-weight: 500; }
+.row-actions {
+  display: none; gap: 4px;
+  align-items: center;
+}
+.data-tbl tr:hover .row-actions { display: flex; }
+.row-actions .ra-btn {
+  padding: 3px 8px; border-radius: 5px;
+  font-size: 10px; cursor: pointer;
+  border: 1px solid var(--glass-border);
+  background: rgba(255,255,255,0.04);
+  color: var(--text-2); transition: all 0.15s;
+  white-space: nowrap;
+}
+.row-actions .ra-btn:hover { background: rgba(255,255,255,0.08); color: var(--text-1); }
+.ra-confirm:hover { border-color: rgba(29,184,122,0.4); color: var(--success) !important; }
+.ra-ignore:hover { border-color: rgba(106,102,122,0.4); }
+.ra-investigate:hover { border-color: rgba(240,180,41,0.4); color: var(--gold-light) !important; }
+.check-cell { width: 36px; }
+.check-cell input { accent-color: var(--gold); }
+
+/* PAGINATION */
+.pagination {
+  display: flex; align-items: center; gap: 6px;
+  padding: 14px 20px;
+  border-top: 1px solid var(--glass-border);
+}
+.pg-btn {
+  width: 30px; height: 28px; border-radius: 6px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 12px; cursor: pointer;
+  border: 1px solid var(--glass-border);
+  background: transparent; color: var(--text-3);
+  transition: all 0.15s;
+}
+.pg-btn:hover { background: rgba(255,255,255,0.06); color: var(--text-1); }
+.pg-btn.active { background: rgba(74,159,255,0.15); border-color: var(--glass-border-gold); color: var(--gold-light); }
+.pg-info { font-size: 11px; color: var(--text-3); margin-left: auto; }
+
+/* DETAIL PANEL */
+.detail-panel {
+  position: fixed;
+  right: -440px; top: 60px; bottom: 0;
+  width: 420px;
+  background: rgba(10,15,30,0.95);
+  backdrop-filter: blur(24px);
+  border-left: 1px solid var(--glass-border);
+  z-index: 300;
+  transition: right 0.35s cubic-bezier(0.4,0,0.2,1);
+  overflow-y: auto;
+  padding: 24px;
+}
+.detail-panel.open { right: 0; }
+.panel-close {
+  float: right; font-size: 18px; cursor: pointer;
+  color: var(--text-3); width: 28px; height: 28px;
+  display: flex; align-items: center; justify-content: center;
+  border-radius: 6px; transition: background 0.2s;
+}
+.panel-close:hover { background: rgba(255,255,255,0.07); color: var(--text-1); }
+.panel-title { font-family: 'Chakra Petch', sans-serif; font-size: 15px; font-weight: 700; color: var(--text-1); margin-bottom: 4px; margin-top: 8px; clear: both; letter-spacing: 0.5px; text-transform: uppercase; }
+.panel-sub { font-size: 12px; color: var(--text-3); margin-bottom: 20px; }
+.panel-section { margin-bottom: 20px; }
+.panel-section-title { font-family: 'IBM Plex Sans', sans-serif; font-size: 10px; font-weight: 600; color: var(--text-3); letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 10px; padding-bottom: 6px; border-bottom: 1px solid var(--glass-border); }
+.detail-row { display: flex; gap: 10px; margin-bottom: 8px; font-size: 12px; }
+.detail-key { color: var(--text-3); min-width: 110px; }
+.detail-val { color: var(--text-1); font-weight: 500; word-break: break-all; }
+.panel-timeline { display: flex; flex-direction: column; gap: 10px; }
+.ptl-item { display: flex; gap: 10px; align-items: flex-start; font-size: 12px; }
+.ptl-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--gold); margin-top: 3px; flex-shrink: 0; box-shadow: 0 0 6px var(--gold); }
+.ptl-text { color: var(--text-2); }
+.ptl-time { color: var(--text-3); font-size: 10px; margin-top: 2px; }
+.panel-action-btn {
+  width: 100%; padding: 11px;
+  border-radius: 10px;
+  font-family: 'Chakra Petch', sans-serif;
+  font-size: 11px; font-weight: 700;
+  letter-spacing: 1.5px; text-transform: uppercase;
+  cursor: pointer; margin-bottom: 8px; transition: all 0.2s;
+}
+.pab-primary {
+  background: linear-gradient(135deg, #1e4fa8, #1a3a7a);
+  border: 1px solid rgba(74,159,255,0.4); color: #fff;
+  box-shadow: 0 4px 14px rgba(74,159,255,0.25);
+}
+.pab-ghost {
+  background: transparent;
+  border: 1px solid var(--glass-border); color: var(--text-2);
+}
+.pab-ghost:hover { background: rgba(255,255,255,0.04); }
+
+/* ══════════════════════════════
+   ASSET DISCOVERY SCREEN
+══════════════════════════════ */
+.disc-search-hero {
+  background: var(--surface-2);
+  backdrop-filter: blur(16px);
+  border: 1px solid var(--glass-border);
+  border-radius: 16px;
+  padding: 20px;
+  margin-bottom: 20px;
+  position: relative; overflow: hidden;
+}
+.disc-search-hero::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(74,159,255,0.5), transparent);
+}
+.disc-search-input {
+  display: flex; align-items: center; gap: 12px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(74,159,255,0.2);
+  border-radius: 12px; padding: 13px 18px;
+}
+.disc-search-input input {
+  flex: 1; background: transparent; border: none; outline: none;
+  font-size: 14px; color: var(--text-1);
+  font-family: 'IBM Plex Sans', sans-serif;
+}
+.disc-search-input input::placeholder { color: var(--text-3); }
+.disc-search-btn {
+  background: linear-gradient(135deg, #1e4fa8 0%, #4a9fff 100%);
+  border: none; border-radius: 8px;
+  padding: 8px 18px;
+  font-size: 13px; font-weight: 700;
+  color: #fff; cursor: pointer;
+  white-space: nowrap;
+}
+.disc-kpi-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 14px; margin-bottom: 24px; }
+.disc-kpi {
+  background: var(--surface-1);
+  backdrop-filter: blur(16px);
+  border: 1px solid var(--glass-border);
+  border-radius: 16px; padding: 16px;
+  position: relative; overflow: hidden; cursor: pointer;
+  transition: all 0.25s;
+}
+.disc-kpi:hover { transform: translateY(-3px); border-color: var(--glass-border-gold); }
+.disc-kpi::after { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; }
+.disc-kpi.dk-blue::after { background: var(--info); }
+.disc-kpi.dk-gold::after { background: var(--gold); }
+.disc-kpi.dk-amber::after { background: var(--amber); }
+.disc-kpi.dk-danger::after { background: var(--risk-critical); }
+.disc-kpi-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 10px; }
+.disc-kpi-icon { font-size: 20px; }
+.disc-sev { font-size: 10px; font-weight: 700; padding: 2px 7px; border-radius: 10px; }
+.disc-sev-crit { color: var(--risk-critical); background: rgba(255,59,74,0.1); }
+.disc-sev-warn { color: var(--risk-medium); background: rgba(240,180,41,0.1); }
+.disc-sev-info { color: var(--info); background: rgba(74,159,255,0.1); }
+.disc-kpi-val { font-family: 'Rubik', sans-serif; font-size: 28px; font-weight: 800; color: var(--text-1); line-height: 1; letter-spacing: -1.5px; margin-bottom: 2px; }
+.disc-kpi-lbl { font-family: 'IBM Plex Sans', sans-serif; font-size: 11px; font-weight: 500; color: var(--text-3); letter-spacing: 0.6px; text-transform: uppercase; margin-bottom: 8px; }
+.disc-kpi-growth { font-size: 11px; font-weight: 600; }
+.disc-kpi-growth.up { color: var(--risk-critical); }
+.disc-kpi-growth.dn { color: var(--success); }
+
+/* 3-col discovery layout */
+.disc-layout { display: grid; grid-template-columns: 200px 1fr 300px; gap: 16px; }
+.disc-filters {
+  background: var(--surface-1);
+  backdrop-filter: blur(16px);
+  border: 1px solid var(--glass-border);
+  border-radius: 18px; padding: 18px;
+}
+.disc-filter-title { font-family: 'IBM Plex Sans', sans-serif; font-size: 9px; font-weight: 600; color: var(--text-3); letter-spacing: 1.8px; text-transform: uppercase; margin-bottom: 12px; }
+.disc-filter-label { font-family: 'IBM Plex Sans', sans-serif; font-size: 10px; font-weight: 500; color: var(--text-3); margin-bottom: 6px; display: block; letter-spacing: 0.8px; text-transform: uppercase; }
+.disc-select {
+  width: 100%;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid var(--glass-border);
+  border-radius: 8px; padding: 7px 10px;
+  font-size: 12px; color: var(--text-2);
+  font-family: 'IBM Plex Sans', sans-serif; outline: none; cursor: pointer;
+  -webkit-appearance: none;
+}
+.disc-toggle {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 10px; font-size: 12px; color: var(--text-2);
+}
+.toggle-pill {
+  width: 36px; height: 19px; border-radius: 10px;
+  background: rgba(255,255,255,0.08);
+  border: 1px solid var(--glass-border);
+  position: relative; cursor: pointer; flex-shrink: 0;
+  transition: background 0.2s;
+}
+.toggle-pill.on { background: rgba(74,159,255,0.4); border-color: var(--gold); }
+.toggle-pill::after {
+  content: ''; position: absolute;
+  width: 13px; height: 13px; border-radius: 50%;
+  background: var(--text-3); top: 2px; left: 2px;
+  transition: left 0.2s, background 0.2s;
+}
+.toggle-pill.on::after { left: 19px; background: var(--gold-light); }
+.disc-apply-btn {
+  width: 100%; padding: 9px;
+  background: linear-gradient(135deg, #1a3a7a, #1e4fa8);
+  border: 1px solid rgba(74,159,255,0.4); color: #fff;
+  border-radius: 8px; font-size: 13px; font-weight: 600;
+  cursor: pointer; margin-top: 4px;
+}
+
+/* NETWORK GRAPH */
+.graph-wrap {
+  background: var(--surface-1);
+  backdrop-filter: blur(16px);
+  border: 1px solid var(--glass-border);
+  border-radius: 18px; overflow: hidden;
+}
+.graph-header { padding: 14px 16px; border-bottom: 1px solid var(--glass-border); }
+.graph-canvas-area {
+  background: rgba(4,7,18,0.8);
+  position: relative; height: 400px;
+  overflow: hidden;
+}
+.graph-canvas-area canvas { width: 100% !important; height: 100% !important; display: block; }
+
+/* DISCOVERY INSIGHTS */
+.insights-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 14px; margin-top: 20px; }
+.insight-card {
+  background: var(--surface-1);
+  backdrop-filter: blur(16px);
+  border: 1px solid var(--glass-border);
+  border-radius: 16px; padding: 18px;
+  cursor: pointer; transition: all 0.25s;
+}
+.insight-card:hover { transform: translateY(-3px); border-color: var(--glass-border-gold); }
+.insight-icon { font-size: 24px; margin-bottom: 10px; }
+.insight-title { font-family: 'IBM Plex Sans', sans-serif; font-size: 11px; font-weight: 600; color: var(--text-1); margin-bottom: 6px; letter-spacing: 1px; text-transform: uppercase; }
+.insight-val { font-family: 'Rubik', sans-serif; font-size: 22px; font-weight: 800; letter-spacing: -1px; margin-bottom: 4px; }
+.insight-sub { font-family: 'IBM Plex Sans', sans-serif; font-size: 11px; color: var(--text-3); }
+
+/* ANIMATIONS */
+@keyframes fadeIn { from{opacity:0} to{opacity:1} }
+@keyframes slideIn { from{opacity:0;transform:translateX(20px)} to{opacity:1;transform:translateX(0)} }
+@keyframes heroLineReveal { to { opacity:1; transform:translateY(0); } }
+@keyframes heroBlink { 0%,100%{opacity:1} 50%{opacity:0.3} }
+
+/* ══════════════════════════════
+   HERO SPLASH SCREEN
+══════════════════════════════ */
+#hero-splash {
+  position: fixed; inset: 0; z-index: 9999;
+  min-height: 100vh;
+  background: #21346e;
+  display: flex; flex-direction: column;
+  justify-content: flex-start;
+  padding-top: clamp(100px, 12vw, 160px);
+  padding-left: clamp(24px, 6vw, 80px);
+  padding-right: clamp(24px, 6vw, 80px);
+  padding-bottom: 90px;
+  overflow: hidden;
+}
+#hero-splash video {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  object-fit: cover;
+  z-index: 0;
+}
+/* Rich multi-layer overlay */
+#hero-splash::before {
+  content: '';
+  position: absolute; inset: 0; z-index: 1;
+  background:
+    linear-gradient(160deg, rgba(13,26,58,0.68) 0%, rgba(30,79,168,0.22) 50%, rgba(8,15,30,0.82) 100%),
+    linear-gradient(to bottom, rgba(8,15,30,0.25) 0%, rgba(8,15,30,0.88) 100%);
+  pointer-events: none;
+}
+/* Scanline texture overlay */
+#hero-splash::after {
+  content: '';
+  position: absolute; inset: 0; z-index: 2;
+  background-image: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0,0,0,0.03) 2px,
+    rgba(0,0,0,0.03) 4px
+  );
+  pointer-events: none;
+}
+.hero-content {
+  position: relative; z-index: 5;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+/* Hero top nav */
+.hero-nav {
+  position: absolute; top: 0; left: 0; right: 0;
+  z-index: 3;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 28px clamp(24px, 6vw, 80px);
+}
+.hero-nav-logo {
+  display: flex; align-items: center; gap: 10px;
+}
+.hero-nav-shield {
+  width: 36px; height: 36px;
+  background: linear-gradient(135deg, #4a9fff, #1e4fa8);
+  border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Chakra Petch', sans-serif;
+  font-size: 13px; font-weight: 700; color: #fff;
+  box-shadow: 0 0 20px rgba(74,159,255,0.4);
+}
+.hero-nav-name {
+  font-family: 'Chakra Petch', sans-serif;
+  font-size: 13px; font-weight: 700;
+  color: #fff; letter-spacing: 2px; text-transform: uppercase;
+}
+.hero-nav-right {
+  display: flex; align-items: center; gap: 28px;
+}
+.hero-nav-link {
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-size: 11px; font-weight: 500;
+  color: rgba(255,255,255,0.5);
+  letter-spacing: 1.5px; text-transform: uppercase;
+  text-decoration: none; transition: color 0.2s;
+}
+.hero-nav-link:hover { color: rgba(255,255,255,0.9); }
+/* Hero bottom stats bar */
+.hero-stats-bar {
+  position: absolute; bottom: 0; left: 0; right: 0;
+  z-index: 4;
+  display: flex; align-items: stretch;
+  border-top: 1px solid rgba(255,255,255,0.08);
+  background: rgba(6,12,26,0.82);
+  backdrop-filter: blur(20px);
+  opacity: 0;
+  animation: heroFadeUp 0.7s 0.9s cubic-bezier(0.16,1,0.3,1) forwards;
+}
+@keyframes heroFadeUp {
+  from { opacity:0; transform: translateY(12px); }
+  to   { opacity:1; transform: translateY(0); }
+}
+.hero-stat-item {
+  flex: 1;
+  padding: 14px 28px;
+  border-right: 1px solid rgba(255,255,255,0.06);
+  display: flex; align-items: center; gap: 12px;
+  transition: background 0.2s;
+}
+.hero-stat-item:last-child { border-right: none; }
+.hero-stat-item:hover { background: rgba(255,255,255,0.03); }
+.hsi-icon {
+  width: 30px; height: 30px; border-radius: 7px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 13px; flex-shrink: 0;
+}
+.hsi-body { display: flex; flex-direction: column; gap: 1px; }
+.hsi-top { display: flex; align-items: baseline; gap: 8px; }
+.hsi-val {
+  font-family: 'Rubik', sans-serif;
+  font-size: 20px; font-weight: 800;
+  color: #fff; line-height: 1; letter-spacing: -0.5px;
+}
+.hsi-trend {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px; font-weight: 500;
+}
+.hsi-trend.up   { color: #1db87a; }
+.hsi-trend.warn { color: #f0b429; }
+.hsi-trend.crit { color: #ff3b4a; }
+.hsi-lbl {
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-size: 10px; font-weight: 400;
+  color: rgba(255,255,255,0.35);
+  letter-spacing: 0.6px; text-transform: uppercase;
+}
+.hero-headline {
+  font-family: 'Chakra Petch', sans-serif;
+  font-weight: 700;
+  font-size: clamp(64px, 10vw, 100px);
+  line-height: 0.95;
+  letter-spacing: -3px;
+  color: #fff;
+  text-transform: uppercase;
+  display: block;
+  margin: 0; padding: 0;
+}
+.hero-headline span { display: block; }
+.hero-cta-wrap {
+  margin-top: 0;
+  position: relative;
+  width: 184px; height: 65px;
+  cursor: pointer;
+  z-index: 10;
+  transition: transform 0.2s cubic-bezier(0.34,1.56,0.64,1);
+  user-select: none;
+}
+.hero-cta-wrap:hover { transform: scale(1.05); }
+.hero-cta-wrap:active { transform: scale(0.95); }
+.hero-cta-wrap svg {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+}
+.hero-cta-label {
+  position: absolute; inset: 0;
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Chakra Petch', sans-serif;
+  font-weight: 700;
+  font-size: 13px;
+  text-transform: uppercase;
+  color: #161a20;
+  letter-spacing: 2.5px;
+  z-index: 1;
+}
+
+/* MISC */
+.flex { display: flex; }
+.gap-8 { gap: 8px; }
+.items-center { align-items: center; }
+.separator { height: 1px; background: var(--glass-border); margin: 4px 0; }
+.text-muted { color: var(--text-3); font-size: 11px; }
+.mt-16 { margin-top: 16px; }
+
+/* Sparkline (drawn via canvas) */
+.sparkline-canvas { display: block; }
+</style>
+</head>
+<body>
+
+<!-- ══════════ HERO SPLASH SCREEN ══════════ -->
+<div id="hero-splash">
+  <video autoplay loop muted playsinline>
+    <source src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260206_044704_dd33cb15-c23f-4cfc-aa09-a0465d4dcb54.mp4" type="video/mp4">
+  </video>
+
+  <!-- Top nav bar -->
+  <div class="hero-nav">
+    <div class="hero-nav-logo">
+      <div class="hero-nav-shield">QS</div>
+      <div>
+        <div class="hero-nav-name">QuantumShield</div>
+        <div style="font-family:'IBM Plex Sans',sans-serif;font-size:9px;color:rgba(255,255,255,0.35);letter-spacing:1.5px;text-transform:uppercase;margin-top:1px;">PNB Cyber Intelligence</div>
+      </div>
+    </div>
+    <div class="hero-nav-right">
+      <a class="hero-nav-link" href="#">Platform</a>
+      <a class="hero-nav-link" href="#">Security</a>
+      <a class="hero-nav-link" href="#">Compliance</a>
+      <a class="hero-nav-link" href="#" style="color:rgba(255,255,255,0.8);">Sign In →</a>
+    </div>
+  </div>
+
+  <!-- Main content -->
+  <div class="hero-content">
+    <!-- Live status pill -->
+    <div style="display:flex;align-items:center;gap:8px;margin-bottom:28px;opacity:0;animation:heroFadeUp 0.6s 0.05s cubic-bezier(0.16,1,0.3,1) forwards;">
+      <div style="width:6px;height:6px;border-radius:50%;background:#1db87a;box-shadow:0 0 8px #1db87a;animation:heroBlink 2s infinite;"></div>
+      <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:rgba(255,255,255,0.45);letter-spacing:2px;text-transform:uppercase;">Live Threat Intelligence · PNB Network</span>
+    </div>
+
+    <!-- Headline with per-line stagger -->
+    <div class="hero-headline">
+      <span style="opacity:0;transform:translateY(36px);animation:heroLineReveal 0.8s 0.15s cubic-bezier(0.16,1,0.3,1) forwards;">NEW ERA</span>
+      <span style="opacity:0;transform:translateY(36px);animation:heroLineReveal 0.8s 0.27s cubic-bezier(0.16,1,0.3,1) forwards;-webkit-text-stroke:2px rgba(255,255,255,0.45);color:transparent;">OF DESIGN</span>
+      <span style="opacity:0;transform:translateY(36px);animation:heroLineReveal 0.8s 0.39s cubic-bezier(0.16,1,0.3,1) forwards;color:#7bbfff;">STARTS NOW</span>
+    </div>
+
+    <!-- Sub text -->
+    <p style="font-family:'IBM Plex Sans',sans-serif;font-size:14px;font-weight:400;color:rgba(255,255,255,0.45);margin-top:28px;max-width:480px;line-height:1.7;letter-spacing:0.2px;opacity:0;animation:heroFadeUp 0.7s 0.52s cubic-bezier(0.16,1,0.3,1) forwards;">
+      Post-quantum cryptography intelligence platform — protecting Punjab National Bank's digital surface from next-generation threats.
+    </p>
+
+    <!-- CTA row -->
+    <div style="display:flex;align-items:center;gap:24px;margin-top:44px;opacity:0;animation:heroFadeUp 0.7s 0.64s cubic-bezier(0.16,1,0.3,1) forwards;">
+      <div class="hero-cta-wrap" onclick="enterDashboard()">
+        <svg viewBox="0 0 184 65" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+          <path d="M8 0H176C180.418 0 184 3.58172 184 8V57C184 61.4183 180.418 65 176 65H8C3.58172 65 0 61.4183 0 57V8C0 3.58172 3.58172 0 8 0Z" fill="white"/>
+        </svg>
+        <span class="hero-cta-label">GET STARTED</span>
+      </div>
+      <div onclick="enterDashboard()" style="display:flex;align-items:center;gap:10px;cursor:pointer;font-family:'IBM Plex Sans',sans-serif;font-size:12px;font-weight:500;color:rgba(255,255,255,0.4);letter-spacing:1px;text-transform:uppercase;transition:color 0.2s;" onmouseover="this.style.color='rgba(255,255,255,0.8)'" onmouseout="this.style.color='rgba(255,255,255,0.4)'">
+        <div style="width:30px;height:30px;border-radius:50%;border:1px solid rgba(255,255,255,0.18);display:flex;align-items:center;justify-content:center;font-size:12px;">→</div>
+        View Dashboard
+      </div>
+    </div>
+  </div>
+
+  <!-- Bottom stats bar -->
+  <div class="hero-stats-bar">
+
+    <div class="hero-stat-item">
+      <div class="hsi-icon" style="background:rgba(74,159,255,0.12);border:1px solid rgba(74,159,255,0.2);">🖥</div>
+      <div class="hsi-body">
+        <div class="hsi-top">
+          <span class="hsi-val">128</span>
+          <span class="hsi-trend up">↑ +12%</span>
+        </div>
+        <div class="hsi-lbl">Total Assets</div>
+      </div>
+    </div>
+
+    <div class="hero-stat-item">
+      <div class="hsi-icon" style="background:rgba(255,59,74,0.12);border:1px solid rgba(255,59,74,0.2);">⚠</div>
+      <div class="hsi-body">
+        <div class="hsi-top">
+          <span class="hsi-val">14</span>
+          <span class="hsi-trend crit">Critical</span>
+        </div>
+        <div class="hsi-lbl">High Risk Assets</div>
+      </div>
+    </div>
+
+    <div class="hero-stat-item">
+      <div class="hsi-icon" style="background:rgba(240,180,41,0.12);border:1px solid rgba(240,180,41,0.2);">🔐</div>
+      <div class="hsi-body">
+        <div class="hsi-top">
+          <span class="hsi-val">9</span>
+          <span class="hsi-trend warn">≤30 days</span>
+        </div>
+        <div class="hsi-lbl">Expiring Certs</div>
+      </div>
+    </div>
+
+    <div class="hero-stat-item">
+      <div class="hsi-icon" style="background:rgba(29,184,122,0.12);border:1px solid rgba(29,184,122,0.2);">✓</div>
+      <div class="hsi-body">
+        <div class="hsi-top">
+          <span class="hsi-val">99.2%</span>
+          <span class="hsi-trend up">Live</span>
+        </div>
+        <div class="hsi-lbl">Scan Coverage</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="app">
+
+<!-- ══════════ SIDEBAR ══════════ -->
+<div class="sidebar">
+  <div class="sidebar-logo">
+    <div class="logo-shield">QS</div>
+    <div class="logo-name">QuantumShield</div>
+    <div class="logo-sub">PNB Cyber Intelligence</div>
+  </div>
+  <div class="nav-section-label">Overview</div>
+  <div class="nav-item active" onclick="showPage('home',this)">
+    <div class="nav-dot"></div> Home Dashboard
+  </div>
+  <div class="nav-section-label">Assets</div>
+  <div class="nav-item" onclick="showPage('inventory',this)">
+    <div class="nav-dot"></div> Asset Inventory
+  </div>
+  <div class="nav-item" onclick="showPage('discovery',this)">
+    <div class="nav-dot"></div> Asset Discovery
+  </div>
+  <div class="nav-section-label">Security</div>
+  <div class="nav-item" onclick="showPage('cbom',this)">
+    <div class="nav-dot"></div> CBOM
+  </div>
+  <div class="nav-item" onclick="showPage('pqc',this)">
+    <div class="nav-dot"></div> Posture of PQC
+  </div>
+  <div class="nav-item" onclick="showPage('cyberrating',this)">
+    <div class="nav-dot"></div> Cyber Rating
+  </div>
+  <div class="nav-item" onclick="showPage('reporting',this)">
+    <div class="nav-dot"></div> Reporting
+  </div>
+  <div class="sidebar-footer">
+    v2.4.1 · Build 20260323<br>
+    <span style="color:var(--success)">● </span>All systems operational
+  </div>
+</div>
+
+<!-- ══════════ MAIN AREA ══════════ -->
+<div class="main-area">
+
+  <!-- TOPBAR -->
+  <div class="topbar">
+    <div class="topbar-search">
+      <span class="srch-icon">⌕</span>
+      <input type="text" placeholder="Search assets, IPs, domains, IoC…">
+      <span style="font-family:'IBM Plex Mono', monospace;font-size:10px;color:var(--text-3);background:rgba(255,255,255,0.05);padding:2px 6px;border-radius:4px">⌘K</span>
+    </div>
+    <div class="topbar-spacer"></div>
+    <div class="scan-timestamp">
+      <span class="dot"></span>
+      Last scan: <strong style="color:var(--text-2)">14:32 IST</strong> · 23 Mar 2026
+    </div>
+    <div class="notif-btn" onclick="alert('3 new alerts:\n\n• vpn.company.com — Critical cipher weakness\n• api.company.com — Certificate expiring in 28 days\n• dev-api.company.com — New asset discovered')">
+      🔔
+      <div class="notif-badge">3</div>
+    </div>
+    <button class="btn-scan" onclick="alert('Initiating full network scan...\n\nEstimated time: 4 minutes\nAssets in queue: 128')">⟳ Run New Scan</button>
+    <div class="user-pill">
+      <div class="user-avatar">HU</div>
+      <span class="user-name">hackathon_user</span>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════
+       HOME PAGE
+  ══════════════════════════ -->
+  <div class="page active" id="page-home">
+
+    <div class="page-header">
+      <div>
+        <div class="page-title">Executive Dashboard</div>
+        <div class="page-sub">Real-time PQC posture · Enterprise-wide visibility</div>
+      </div>
+      <div class="header-actions">
+        <button class="btn-sm btn-sm-ghost" onclick="alert('Generating Executive Dashboard PDF...')">⬇ Export PDF</button>
+        <button class="btn-sm btn-sm-ghost" onclick="alert('Opening report scheduler...\n\nSchedule daily/weekly/monthly scans and report delivery.')">📅 Schedule</button>
+      </div>
+    </div>
+
+    <!-- KPI CARDS -->
+    <div class="kpi-grid">
+      <div class="kpi-card k-blue" onclick="showPage('inventory',null)">
+        <div class="kpi-top">
+          <div class="kpi-icon k-blue">🖥</div>
+          <div class="kpi-trend up">↑ +12%</div>
+        </div>
+        <div class="kpi-value" id="kpi-1">128</div>
+        <div class="kpi-label">Total Assets</div>
+        <div class="kpi-sparkline">
+          <canvas class="sparkline-canvas" id="sp1" width="120" height="32"></canvas>
+        </div>
+      </div>
+      <div class="kpi-card k-gold">
+        <div class="kpi-top">
+          <div class="kpi-icon k-gold">🌐</div>
+          <div class="kpi-trend up">↑ +7%</div>
+        </div>
+        <div class="kpi-value">42</div>
+        <div class="kpi-label">Public Web Apps</div>
+        <div class="kpi-sparkline">
+          <canvas class="sparkline-canvas" id="sp2" width="120" height="32"></canvas>
+        </div>
+      </div>
+      <div class="kpi-card k-amber">
+        <div class="kpi-top">
+          <div class="kpi-icon k-amber">🔐</div>
+          <div class="kpi-trend down">↑ +3</div>
+        </div>
+        <div class="kpi-value">9</div>
+        <div class="kpi-label">Expiring Certificates</div>
+        <div class="kpi-sparkline">
+          <canvas class="sparkline-canvas" id="sp3" width="120" height="32"></canvas>
+        </div>
+      </div>
+      <div class="kpi-card k-danger">
+        <div class="kpi-top">
+          <div class="kpi-icon k-danger">⚠</div>
+          <div class="kpi-trend down">↓ -2</div>
+        </div>
+        <div class="kpi-value">14</div>
+        <div class="kpi-label">High Risk Assets</div>
+        <div class="kpi-sparkline">
+          <canvas class="sparkline-canvas" id="sp4" width="120" height="32"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <!-- HOME MAIN GRID -->
+    <div class="home-grid">
+
+      <!-- LEFT COL -->
+      <div class="left-col">
+
+        <!-- Asset Type Donut -->
+        <div class="g-card gold-accent">
+          <div class="card-header">
+            <div class="card-title">Asset Type Distribution</div>
+            <span class="card-badge">128 total</span>
+          </div>
+          <div class="card-body">
+            <div class="donut-container">
+              <div class="donut-wrap">
+                <svg width="130" height="130" viewBox="0 0 130 130">
+                  <circle cx="65" cy="65" r="50" fill="none" stroke="rgba(255,255,255,0.04)" stroke-width="22"/>
+                  <!-- Web Apps 42/128 = 65° -->
+                  <circle cx="65" cy="65" r="50" fill="none" stroke="#4a9fff" stroke-width="22"
+                    stroke-dasharray="64.5 250" stroke-dashoffset="-20" stroke-linecap="round"/>
+                  <!-- APIs 26/128 = 40° -->
+                  <circle cx="65" cy="65" r="50" fill="none" stroke="#2d7ae0" stroke-width="22"
+                    stroke-dasharray="40 250" stroke-dashoffset="-87" stroke-linecap="round"/>
+                  <!-- Servers 37/128 = 57° -->
+                  <circle cx="65" cy="65" r="50" fill="none" stroke="#1e4fa8" stroke-width="22"
+                    stroke-dasharray="57.5 250" stroke-dashoffset="-130" stroke-linecap="round"/>
+                  <!-- DB 11/128 = 17° -->
+                  <circle cx="65" cy="65" r="50" fill="none" stroke="#1DB87A" stroke-width="22"
+                    stroke-dasharray="17 250" stroke-dashoffset="-190" stroke-linecap="round"/>
+                  <!-- Other 12/128 -->
+                  <circle cx="65" cy="65" r="50" fill="none" stroke="#526080" stroke-width="22"
+                    stroke-dasharray="18 250" stroke-dashoffset="-210" stroke-linecap="round"/>
+                  <text x="65" y="60" text-anchor="middle" font-family="Rubik,sans-serif" font-weight="800" font-size="20" fill="#eef2ff">128</text>
+                  <text x="65" y="74" text-anchor="middle" font-size="10" fill="#526080">Assets</text>
+                </svg>
+              </div>
+              <div class="legend-list">
+                <div class="legend-item"><div class="legend-left"><div class="legend-dot" style="background:#4a9fff"></div><div class="legend-name">Web Apps</div></div><div class="legend-val">42</div></div>
+                <div class="legend-item"><div class="legend-left"><div class="legend-dot" style="background:#2d7ae0"></div><div class="legend-name">APIs</div></div><div class="legend-val">26</div></div>
+                <div class="legend-item"><div class="legend-left"><div class="legend-dot" style="background:#1e4fa8"></div><div class="legend-name">Servers</div></div><div class="legend-val">37</div></div>
+                <div class="legend-item"><div class="legend-left"><div class="legend-dot" style="background:#1DB87A"></div><div class="legend-name">Databases</div></div><div class="legend-val">11</div></div>
+                <div class="legend-item"><div class="legend-left"><div class="legend-dot" style="background:#526080"></div><div class="legend-name">Other</div></div><div class="legend-val">12</div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Risk Distribution -->
+        <div class="g-card">
+          <div class="card-header">
+            <div class="card-title">Risk Distribution</div>
+            <span class="card-badge" style="color:var(--risk-critical);background:rgba(255,59,74,0.1)">11% Critical</span>
+          </div>
+          <div class="card-body">
+            <div class="risk-row">
+              <div class="risk-label" style="color:var(--risk-critical)">Critical</div>
+              <div class="risk-track"><div class="risk-fill" style="width:11%;background:var(--risk-critical)"></div></div>
+              <div class="risk-pct">11%</div>
+            </div>
+            <div class="risk-row">
+              <div class="risk-label" style="color:var(--risk-high)">High</div>
+              <div class="risk-track"><div class="risk-fill" style="width:22%;background:var(--risk-high)"></div></div>
+              <div class="risk-pct">22%</div>
+            </div>
+            <div class="risk-row">
+              <div class="risk-label" style="color:var(--risk-medium)">Medium</div>
+              <div class="risk-track"><div class="risk-fill" style="width:45%;background:var(--risk-medium)"></div></div>
+              <div class="risk-pct">45%</div>
+            </div>
+            <div class="risk-row">
+              <div class="risk-label" style="color:var(--risk-low)">Low</div>
+              <div class="risk-track"><div class="risk-fill" style="width:22%;background:var(--risk-low)"></div></div>
+              <div class="risk-pct">22%</div>
+            </div>
+            <!-- Stacked bar -->
+            <div style="display:flex;height:10px;border-radius:5px;overflow:hidden;margin-top:12px;gap:1px">
+              <div style="width:11%;background:var(--risk-critical)"></div>
+              <div style="width:22%;background:var(--risk-high)"></div>
+              <div style="width:45%;background:var(--risk-medium)"></div>
+              <div style="flex:1;background:var(--risk-low)"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Certificate Expiry -->
+        <div class="g-card">
+          <div class="card-header">
+            <div class="card-title">Certificate Expiry Timeline</div>
+            <span class="card-badge" style="color:var(--risk-high);background:rgba(255,122,47,0.1)">3 urgent</span>
+          </div>
+          <div class="card-body">
+            <div class="cert-item">
+              <div class="cert-dot-wrap" style="background:rgba(255,59,74,0.1)">🔴</div>
+              <div class="cert-info">
+                <div class="cert-name">portal.company.com</div>
+                <div class="cert-days">0–30 days · DigiCert</div>
+              </div>
+              <div class="cert-count" style="color:var(--risk-critical)">3</div>
+            </div>
+            <div class="cert-item">
+              <div class="cert-dot-wrap" style="background:rgba(255,122,47,0.1)">🟠</div>
+              <div class="cert-info">
+                <div class="cert-name">api.company.com</div>
+                <div class="cert-days">31–60 days · Let's Encrypt</div>
+              </div>
+              <div class="cert-count" style="color:var(--risk-high)">4</div>
+            </div>
+            <div class="cert-item">
+              <div class="cert-dot-wrap" style="background:rgba(74,159,255,0.1)">🔵</div>
+              <div class="cert-info">
+                <div class="cert-name">vpn.company.com</div>
+                <div class="cert-days">61–90 days · COMODO</div>
+              </div>
+              <div class="cert-count" style="color:var(--risk-medium)">2</div>
+            </div>
+            <div class="cert-item">
+              <div class="cert-dot-wrap" style="background:rgba(29,184,122,0.1)">🟢</div>
+              <div class="cert-info">
+                <div class="cert-name">Remaining assets</div>
+                <div class="cert-days">&gt;90 days · Various CAs</div>
+              </div>
+              <div class="cert-count" style="color:var(--risk-low)">84</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- RIGHT COL -->
+      <div class="right-col">
+
+        <!-- Recent Asset Table -->
+        <div class="g-card gold-accent">
+          <div class="card-header">
+            <div class="card-title">Recent Asset Activity</div>
+            <button class="btn-sm btn-sm-ghost" style="font-size:11px" onclick="showPage('inventory',document.querySelectorAll('.nav-item')[1])">View All →</button>
+          </div>
+          <table class="mini-table">
+            <thead><tr>
+              <th>Asset</th><th>Type</th><th>Owner</th><th>Risk</th><th>Cert</th><th>Last Scan</th>
+            </tr></thead>
+            <tbody>
+              <tr><td class="tbl-name">portal.company.com</td><td>Web App</td><td>IT</td><td><span class="pill pill-high">High</span></td><td><span class="pill pill-expiring">Expiring</span></td><td class="mono text-muted">2h ago</td></tr>
+              <tr><td class="tbl-name">api.company.com</td><td>API</td><td>DevOps</td><td><span class="pill pill-medium">Medium</span></td><td><span class="pill pill-valid">Valid</span></td><td class="mono text-muted">5h ago</td></tr>
+              <tr><td class="tbl-name">vpn.company.com</td><td>Gateway</td><td>Infra</td><td><span class="pill pill-critical">Critical</span></td><td><span class="pill pill-expired">Expired</span></td><td class="mono text-muted">1h ago</td></tr>
+              <tr><td class="tbl-name">mail.company.com</td><td>Server</td><td>IT</td><td><span class="pill pill-low">Low</span></td><td><span class="pill pill-valid">Valid</span></td><td class="mono text-muted">1d ago</td></tr>
+              <tr><td class="tbl-name">app.company.com</td><td>Web App</td><td>IT</td><td><span class="pill pill-medium">Medium</span></td><td><span class="pill pill-valid">Valid</span></td><td class="mono text-muted">5d ago</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Geo Map -->
+        <div class="g-card">
+          <div class="card-header">
+            <div class="card-title">Geographic Asset Distribution</div>
+            <span class="text-muted">5 regions</span>
+          </div>
+          <div class="card-body" style="padding:12px 16px">
+            <div class="geo-canvas" style="height:180px">
+              <svg width="100%" height="180" viewBox="0 0 640 180" preserveAspectRatio="xMidYMid meet">
+                <!-- Simple world silhouette lines -->
+                <path d="M 0 80 Q 80 40 160 70 Q 200 50 240 80 Q 280 60 320 90 Q 380 50 440 80 Q 500 60 560 85 Q 600 70 640 80" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
+                <path d="M 0 120 Q 60 100 120 120 Q 180 90 220 120 Q 260 100 300 130 Q 360 110 400 130 Q 460 100 500 120 Q 560 110 640 120" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
+                <!-- Grid -->
+                <line x1="160" y1="20" x2="160" y2="160" stroke="rgba(255,255,255,0.03)" stroke-width="1"/>
+                <line x1="320" y1="20" x2="320" y2="160" stroke="rgba(255,255,255,0.03)" stroke-width="1"/>
+                <line x1="480" y1="20" x2="480" y2="160" stroke="rgba(255,255,255,0.03)" stroke-width="1"/>
+                <line x1="0" y1="90" x2="640" y2="90" stroke="rgba(255,255,255,0.03)" stroke-width="1"/>
+                <!-- India pin -->
+                <circle cx="430" cy="100" r="14" fill="rgba(74,159,255,0.15)" stroke="rgba(74,159,255,0.4)" stroke-width="1">
+                  <animate attributeName="r" values="10;16;10" dur="3s" repeatCount="indefinite"/>
+                  <animate attributeName="opacity" values="0.8;0.3;0.8" dur="3s" repeatCount="indefinite"/>
+                </circle>
+                <circle cx="430" cy="100" r="5" fill="#4a9fff"/>
+                <text x="430" y="124" text-anchor="middle" font-size="9" fill="rgba(255,255,255,0.5)">India</text>
+                <text x="430" y="134" text-anchor="middle" font-size="8" fill="rgba(74,159,255,0.8)">42 assets</text>
+                <!-- Singapore pin -->
+                <circle cx="510" cy="115" r="10" fill="rgba(45,122,224,0.15)" stroke="rgba(45,122,224,0.4)" stroke-width="1">
+                  <animate attributeName="r" values="7;13;7" dur="3.5s" repeatCount="indefinite"/>
+                  <animate attributeName="opacity" values="0.8;0.2;0.8" dur="3.5s" repeatCount="indefinite"/>
+                </circle>
+                <circle cx="510" cy="115" r="4" fill="#2d7ae0"/>
+                <text x="510" y="136" text-anchor="middle" font-size="9" fill="rgba(255,255,255,0.5)">Singapore</text>
+                <!-- Germany pin -->
+                <circle cx="280" cy="65" r="10" fill="rgba(123,191,255,0.15)" stroke="rgba(123,191,255,0.4)" stroke-width="1">
+                  <animate attributeName="r" values="7;12;7" dur="2.8s" repeatCount="indefinite"/>
+                </circle>
+                <circle cx="280" cy="65" r="4" fill="#7bbfff"/>
+                <text x="280" y="87" text-anchor="middle" font-size="9" fill="rgba(255,255,255,0.5)">Germany</text>
+                <!-- USA pin -->
+                <circle cx="110" cy="80" r="11" fill="rgba(29,184,122,0.15)" stroke="rgba(29,184,122,0.4)" stroke-width="1">
+                  <animate attributeName="r" values="8;14;8" dur="4s" repeatCount="indefinite"/>
+                </circle>
+                <circle cx="110" cy="80" r="5" fill="#1DB87A"/>
+                <text x="110" y="101" text-anchor="middle" font-size="9" fill="rgba(255,255,255,0.5)">USA</text>
+                <!-- UAE -->
+                <circle cx="365" cy="95" r="8" fill="rgba(30,79,168,0.15)" stroke="rgba(30,79,168,0.4)" stroke-width="1">
+                  <animate attributeName="r" values="6;11;6" dur="3.2s" repeatCount="indefinite"/>
+                </circle>
+                <circle cx="365" cy="95" r="4" fill="#1e4fa8"/>
+                <text x="365" y="115" text-anchor="middle" font-size="9" fill="rgba(255,255,255,0.5)">UAE</text>
+              </svg>
+            </div>
+            <div style="display:flex;gap:16px;margin-top:10px;flex-wrap:wrap">
+              <div style="display:flex;align-items:center;gap:5px;font-size:11px;color:var(--text-3)"><span style="width:6px;height:6px;border-radius:50%;background:#4a9fff;display:inline-block"></span>India (42)</div>
+              <div style="display:flex;align-items:center;gap:5px;font-size:11px;color:var(--text-3)"><span style="width:6px;height:6px;border-radius:50%;background:#1DB87A;display:inline-block"></span>USA (28)</div>
+              <div style="display:flex;align-items:center;gap:5px;font-size:11px;color:var(--text-3)"><span style="width:6px;height:6px;border-radius:50%;background:#7bbfff;display:inline-block"></span>Germany (24)</div>
+              <div style="display:flex;align-items:center;gap:5px;font-size:11px;color:var(--text-3)"><span style="width:6px;height:6px;border-radius:50%;background:#2d7ae0;display:inline-block"></span>Singapore (18)</div>
+              <div style="display:flex;align-items:center;gap:5px;font-size:11px;color:var(--text-3)"><span style="width:6px;height:6px;border-radius:50%;background:#1e4fa8;display:inline-block"></span>UAE (16)</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Activity Feed -->
+        <div class="g-card">
+          <div class="card-header">
+            <div class="card-title">Recent Activity Feed</div>
+            <span class="text-muted">Live updates</span>
+          </div>
+          <div class="card-body">
+            <div class="activity-item" style="animation-delay:0.05s">
+              <div class="act-icon" style="background:rgba(74,159,255,0.15);color:#4a9fff">🌐</div>
+              <div class="act-text">New domain <strong>dev-api.company.com</strong> discovered and added to inventory</div>
+              <div class="act-time">1h ago</div>
+            </div>
+            <div class="activity-item" style="animation-delay:0.1s">
+              <div class="act-icon" style="background:rgba(255,122,47,0.15);color:#FF7A2F">🔐</div>
+              <div class="act-text">Certificate for <strong>api.company.com</strong> expiring in 28 days</div>
+              <div class="act-time">2h ago</div>
+            </div>
+            <div class="activity-item" style="animation-delay:0.15s">
+              <div class="act-icon" style="background:rgba(255,59,74,0.15);color:#FF3B4A">🔴</div>
+              <div class="act-text">High-risk server <strong>vpn.company.com</strong> detected with weak cipher</div>
+              <div class="act-time">3h ago</div>
+            </div>
+            <div class="activity-item" style="animation-delay:0.2s">
+              <div class="act-icon" style="background:rgba(29,184,122,0.15);color:#1DB87A">✓</div>
+              <div class="act-text">Full scan completed — <strong>125 assets</strong> surveyed, 0 errors</div>
+              <div class="act-time">10m ago</div>
+            </div>
+            <div class="activity-item" style="animation-delay:0.25s">
+              <div class="act-icon" style="background:rgba(74,159,255,0.15);color:#4a9fff">⚡</div>
+              <div class="act-text"><strong>NCKY</strong> asset negotiation completed — Kyber key exchange active</div>
+              <div class="act-time">5h ago</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div><!-- /page-home -->
+
+  <!-- ══════════════════════════
+       ASSET INVENTORY PAGE
+  ══════════════════════════ -->
+  <div class="page" id="page-inventory">
+    <div class="page-header">
+      <div>
+        <div class="page-title">Asset Inventory</div>
+        <div class="page-sub">Manage and monitor all discovered digital assets</div>
+      </div>
+      <div class="header-actions">
+        <button class="btn-sm btn-sm-ghost">⬇ Export</button>
+        <button class="btn-sm btn-sm-gold">＋ Add Asset</button>
+      </div>
+    </div>
+
+    <!-- Inventory KPI cards -->
+    <div class="inv-kpi-grid">
+      <div class="inv-kpi c-blue active" onclick="switchInvTab('domains',this)">
+        <div class="inv-kpi-top">
+          <div class="inv-kpi-icon">🌐</div>
+          <div class="inv-kpi-trend up">↑ +5</div>
+        </div>
+        <div class="inv-kpi-val">20</div>
+        <div class="inv-kpi-lbl">Domains</div>
+        <canvas id="isp1" width="140" height="28" style="display:block;margin-top:10px"></canvas>
+      </div>
+      <div class="inv-kpi c-gold" onclick="switchInvTab('ssl',this)">
+        <div class="inv-kpi-top">
+          <div class="inv-kpi-icon">🔒</div>
+          <div class="inv-kpi-trend down">↑ +3 expiring</div>
+        </div>
+        <div class="inv-kpi-val">15</div>
+        <div class="inv-kpi-lbl">SSL Certificates</div>
+        <canvas id="isp2" width="140" height="28" style="display:block;margin-top:10px"></canvas>
+      </div>
+      <div class="inv-kpi c-amber" onclick="switchInvTab('ip',this)">
+        <div class="inv-kpi-top">
+          <div class="inv-kpi-icon">📡</div>
+          <div class="inv-kpi-trend up">↑ +15 new</div>
+        </div>
+        <div class="inv-kpi-val">34</div>
+        <div class="inv-kpi-lbl">IP / Subnets</div>
+        <canvas id="isp3" width="140" height="28" style="display:block;margin-top:10px"></canvas>
+      </div>
+      <div class="inv-kpi c-green" onclick="switchInvTab('software',this)">
+        <div class="inv-kpi-top">
+          <div class="inv-kpi-icon">💾</div>
+          <div class="inv-kpi-trend up">↑ +10</div>
+        </div>
+        <div class="inv-kpi-val">52</div>
+        <div class="inv-kpi-lbl">Software Assets</div>
+        <canvas id="isp4" width="140" height="28" style="display:block;margin-top:10px"></canvas>
+      </div>
+    </div>
+
+    <!-- Main data card -->
+    <div class="g-card gold-accent">
+      <!-- Tabs -->
+      <div class="tab-bar">
+        <div class="tab active" id="tab-domains" onclick="switchInvTab('domains',null)">Domains (20)</div>
+        <div class="tab" id="tab-ssl" onclick="switchInvTab('ssl',null)">SSL Certs (15)</div>
+        <div class="tab" id="tab-ip" onclick="switchInvTab('ip',null)">IP / Subnets (34)</div>
+        <div class="tab" id="tab-software" onclick="switchInvTab('software',null)">Software (52)</div>
+      </div>
+
+      <!-- Filter bar -->
+      <div class="filter-bar">
+        <div class="filter-search">
+          <span style="color:var(--text-3);font-size:13px">⌕</span>
+          <input type="text" placeholder="Search assets…" id="inv-search">
+        </div>
+        <select class="filter-select"><option>All Status</option><option>New</option><option>Confirmed</option><option>False Positive</option></select>
+        <select class="filter-select"><option>All Risk</option><option>Critical</option><option>High</option><option>Medium</option><option>Low</option></select>
+        <select class="filter-select"><option>All Time</option><option>Last 7 days</option><option>Last 30 days</option><option>Last 90 days</option></select>
+        <div class="filter-spacer"></div>
+        <button class="btn-sm btn-sm-ghost">↻ Refresh</button>
+        <button class="btn-sm btn-sm-ghost">⬇ Export CSV</button>
+      </div>
+
+      <!-- DOMAINS TABLE -->
+      <div id="inv-domains" class="data-table-wrap">
+        <table class="data-tbl">
+          <thead><tr>
+            <th class="check-cell"><input type="checkbox"></th>
+            <th>Detection Date <span class="sort-icon">↕</span></th>
+            <th>Domain Name <span class="sort-icon">↕</span></th>
+            <th>Registration Date <span class="sort-icon">↕</span></th>
+            <th>Registrar</th>
+            <th>Company</th>
+            <th>Status <span class="sort-icon">↕</span></th>
+            <th>Risk <span class="sort-icon">↕</span></th>
+            <th>Actions</th>
+          </tr></thead>
+          <tbody>
+            <tr onclick="openPanel('www.cos.pnb.bank.in')">
+              <td class="check-cell"><input type="checkbox"></td>
+              <td class="mono">03 Mar 2026</td>
+              <td class="tbl-name">www.cos.pnb.bank.in</td>
+              <td class="mono">17 Feb 2005</td>
+              <td style="font-size:11px;color:var(--text-3)">NIXI</td>
+              <td><span class="pill pill-new">PNB</span></td>
+              <td><span class="pill pill-new">New</span></td>
+              <td><span class="pill pill-medium">Medium</span></td>
+              <td><div class="row-actions"><button class="ra-btn ra-confirm">Confirm</button><button class="ra-btn ra-ignore">Ignore</button><button class="ra-btn ra-investigate">Investigate</button></div></td>
+            </tr>
+            <tr onclick="openPanel('www2.pnbrrbkiosk.in')">
+              <td class="check-cell"><input type="checkbox"></td>
+              <td class="mono">17 Oct 2024</td>
+              <td class="tbl-name">www2.pnbrrbkiosk.in</td>
+              <td class="mono">22 Mar 2021</td>
+              <td style="font-size:11px;color:var(--text-3)">NIXI</td>
+              <td><span class="pill pill-new">PNB</span></td>
+              <td><span class="pill pill-confirmed">Confirmed</span></td>
+              <td><span class="pill pill-low">Low</span></td>
+              <td><div class="row-actions"><button class="ra-btn ra-confirm">Confirm</button><button class="ra-btn ra-ignore">Ignore</button><button class="ra-btn ra-investigate">Investigate</button></div></td>
+            </tr>
+            <tr onclick="openPanel('upload.pnbuniv.net.in')">
+              <td class="check-cell"><input type="checkbox"></td>
+              <td class="mono">17 Oct 2024</td>
+              <td class="tbl-name">upload.pnbuniv.net.in</td>
+              <td class="mono">22 Mar 2021</td>
+              <td style="font-size:11px;color:var(--text-3)">NIXI</td>
+              <td><span class="pill pill-new">PNB</span></td>
+              <td><span class="pill pill-fp">False Positive</span></td>
+              <td><span class="pill pill-low">Low</span></td>
+              <td><div class="row-actions"><button class="ra-btn ra-confirm">Confirm</button><button class="ra-btn ra-ignore">Ignore</button><button class="ra-btn ra-investigate">Investigate</button></div></td>
+            </tr>
+            <tr onclick="openPanel('postman.pnb.bank.in')">
+              <td class="check-cell"><input type="checkbox"></td>
+              <td class="mono">17 Oct 2024</td>
+              <td class="tbl-name">postman.pnb.bank.in</td>
+              <td class="mono">22 Mar 2021</td>
+              <td style="font-size:11px;color:var(--text-3)">NIXI</td>
+              <td><span class="pill pill-new">PNB</span></td>
+              <td><span class="pill pill-new">New</span></td>
+              <td><span class="pill pill-high">High</span></td>
+              <td><div class="row-actions"><button class="ra-btn ra-confirm">Confirm</button><button class="ra-btn ra-ignore">Ignore</button><button class="ra-btn ra-investigate">Investigate</button></div></td>
+            </tr>
+            <tr onclick="openPanel('proxy.pnb.bank.in')">
+              <td class="check-cell"><input type="checkbox"></td>
+              <td class="mono">17 Nov 2024</td>
+              <td class="tbl-name">proxy.pnb.bank.in</td>
+              <td class="mono">22 Mar 2021</td>
+              <td style="font-size:11px;color:var(--text-3)">NIXI</td>
+              <td><span class="pill pill-new">PNB</span></td>
+              <td><span class="pill pill-new">New</span></td>
+              <td><span class="pill pill-critical">Critical</span></td>
+              <td><div class="row-actions"><button class="ra-btn ra-confirm">Confirm</button><button class="ra-btn ra-ignore">Ignore</button><button class="ra-btn ra-investigate">Investigate</button></div></td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="pagination">
+          <div class="pg-btn active">1</div>
+          <div class="pg-btn">2</div>
+          <div class="pg-btn">3</div>
+          <div class="pg-btn">4</div>
+          <div class="pg-btn">→</div>
+          <div class="pg-info">Showing 1–5 of 20 domains</div>
+        </div>
+      </div>
+
+      <!-- SSL TABLE -->
+      <div id="inv-ssl" class="data-table-wrap" style="display:none">
+        <table class="data-tbl">
+          <thead><tr>
+            <th class="check-cell"><input type="checkbox"></th>
+            <th>SHA Fingerprint</th>
+            <th>Valid From <span class="sort-icon">↕</span></th>
+            <th>Valid Till <span class="sort-icon">↕</span></th>
+            <th>Common Name</th>
+            <th>Certificate Authority <span class="sort-icon">↕</span></th>
+            <th>Company</th>
+            <th>Risk <span class="sort-icon">↕</span></th>
+            <th>Actions</th>
+          </tr></thead>
+          <tbody>
+            <tr onclick="openPanel('cert-symantec')">
+              <td class="check-cell"><input type="checkbox"></td>
+              <td class="mono" style="font-size:10px">b7563b98…509034a6</td>
+              <td class="mono">08 Feb 2026</td>
+              <td class="mono" style="color:var(--risk-high)">10 Apr 2026</td>
+              <td class="tbl-name">Generic Cert for WF Ovrd</td>
+              <td>Symantec</td>
+              <td><span class="pill pill-new">PNB</span></td>
+              <td><span class="pill pill-medium">Medium</span></td>
+              <td><div class="row-actions"><button class="ra-btn ra-confirm">Confirm</button><button class="ra-btn ra-ignore">Ignore</button><button class="ra-btn ra-investigate">Investigate</button></div></td>
+            </tr>
+            <tr onclick="openPanel('cert-digicert')">
+              <td class="check-cell"><input type="checkbox"></td>
+              <td class="mono" style="font-size:10px">d8527f5c…506c94</td>
+              <td class="mono">07 Feb 2026</td>
+              <td class="mono" style="color:var(--risk-critical)">15 Mar 2026</td>
+              <td class="tbl-name">Generic Cert for WF Ovrd</td>
+              <td>DigiCert</td>
+              <td><span class="pill pill-new">PNB</span></td>
+              <td><span class="pill pill-critical">Critical</span></td>
+              <td><div class="row-actions"><button class="ra-btn ra-confirm">Confirm</button><button class="ra-btn ra-ignore">Ignore</button><button class="ra-btn ra-investigate">Investigate</button></div></td>
+            </tr>
+            <tr onclick="openPanel('cert-entrust')">
+              <td class="check-cell"><input type="checkbox"></td>
+              <td class="mono" style="font-size:10px">Abe3195b…9e493</td>
+              <td class="mono">06 Feb 2026</td>
+              <td class="mono" style="color:var(--risk-low)">06 Feb 2027</td>
+              <td class="tbl-name">Generic Cert for WF Ovrd</td>
+              <td>Entrust</td>
+              <td><span class="pill pill-new">PNB</span></td>
+              <td><span class="pill pill-low">Low</span></td>
+              <td><div class="row-actions"><button class="ra-btn ra-confirm">Confirm</button><button class="ra-btn ra-ignore">Ignore</button><button class="ra-btn ra-investigate">Investigate</button></div></td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="pagination">
+          <div class="pg-btn active">1</div>
+          <div class="pg-btn">2</div>
+          <div class="pg-btn">→</div>
+          <div class="pg-info">Showing 1–3 of 15 certificates</div>
+        </div>
+      </div>
+
+      <!-- IP TABLE -->
+      <div id="inv-ip" class="data-table-wrap" style="display:none">
+        <table class="data-tbl">
+          <thead><tr>
+            <th class="check-cell"><input type="checkbox"></th>
+            <th>Detection Date <span class="sort-icon">↕</span></th>
+            <th>IP Address <span class="sort-icon">↕</span></th>
+            <th>Ports</th>
+            <th>Subnet</th>
+            <th>ASN</th>
+            <th>Geo Location <span class="sort-icon">↕</span></th>
+            <th>Company</th>
+            <th>Exposure <span class="sort-icon">↕</span></th>
+            <th>Actions</th>
+          </tr></thead>
+          <tbody>
+            <tr onclick="openPanel('40.104.62.216')">
+              <td class="check-cell"><input type="checkbox"></td>
+              <td class="mono">05 Mar 2026</td>
+              <td class="tbl-name mono">40.104.62.216</td>
+              <td><span class="pill pill-new">80</span></td>
+              <td class="mono" style="font-size:10px">103.107.224.0/22</td>
+              <td class="mono" style="font-size:10px">AS9583</td>
+              <td style="font-size:11px">—</td>
+              <td style="font-size:11px;color:var(--text-3)">Punjab National Bank</td>
+              <td><span class="pill pill-medium">Public</span></td>
+              <td><div class="row-actions"><button class="ra-btn ra-confirm">Confirm</button><button class="ra-btn ra-ignore">Ignore</button><button class="ra-btn ra-investigate">Investigate</button></div></td>
+            </tr>
+            <tr onclick="openPanel('103.25.151.22')">
+              <td class="check-cell"><input type="checkbox"></td>
+              <td class="mono">17 Oct 2024</td>
+              <td class="tbl-name mono">103.25.151.22</td>
+              <td><span class="pill pill-new">53, 80</span></td>
+              <td class="mono" style="font-size:10px">103.107.224.0/22</td>
+              <td class="mono" style="font-size:10px">AS9583</td>
+              <td style="font-size:11px">Nashik, India</td>
+              <td style="font-size:11px;color:var(--text-3)">Punjab National Bank</td>
+              <td><span class="pill pill-high">High</span></td>
+              <td><div class="row-actions"><button class="ra-btn ra-confirm">Confirm</button><button class="ra-btn ra-ignore">Ignore</button><button class="ra-btn ra-investigate">Investigate</button></div></td>
+            </tr>
+            <tr onclick="openPanel('20.153.63.72')">
+              <td class="check-cell"><input type="checkbox"></td>
+              <td class="mono">17 Nov 2024</td>
+              <td class="tbl-name mono">20.153.63.72</td>
+              <td><span class="pill pill-new">443</span></td>
+              <td class="mono" style="font-size:10px">103.107.224.0/22</td>
+              <td class="mono" style="font-size:10px">AS9583</td>
+              <td style="font-size:11px">Leh, India</td>
+              <td style="font-size:11px;color:var(--text-3)">Punjab National Bank</td>
+              <td><span class="pill pill-low">Internal</span></td>
+              <td><div class="row-actions"><button class="ra-btn ra-confirm">Confirm</button><button class="ra-btn ra-ignore">Ignore</button><button class="ra-btn ra-investigate">Investigate</button></div></td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="pagination">
+          <div class="pg-btn active">1</div><div class="pg-btn">2</div><div class="pg-btn">3</div><div class="pg-btn">→</div>
+          <div class="pg-info">Showing 1–3 of 34 IPs</div>
+        </div>
+      </div>
+
+      <!-- SOFTWARE TABLE -->
+      <div id="inv-software" class="data-table-wrap" style="display:none">
+        <table class="data-tbl">
+          <thead><tr>
+            <th class="check-cell"><input type="checkbox"></th>
+            <th>Detection Date <span class="sort-icon">↕</span></th>
+            <th>Product <span class="sort-icon">↕</span></th>
+            <th>Version</th>
+            <th>Type</th>
+            <th>Port</th>
+            <th>Host</th>
+            <th>Company</th>
+            <th>Vuln Score <span class="sort-icon">↕</span></th>
+            <th>Actions</th>
+          </tr></thead>
+          <tbody>
+            <tr onclick="openPanel('apache-443')">
+              <td class="check-cell"><input type="checkbox"></td>
+              <td class="mono">17 Oct 2024</td>
+              <td class="tbl-name">Apache</td>
+              <td class="mono">—</td>
+              <td>WebServer</td>
+              <td class="mono">443</td>
+              <td class="mono" style="font-size:10px">40.59.99.173</td>
+              <td style="font-size:11px;color:var(--text-3)">PNB</td>
+              <td><span style="font-family:'Rubik',sans-serif;font-size:16px;font-weight:700;color:var(--risk-medium)">6.4</span></td>
+              <td><div class="row-actions"><button class="ra-btn ra-confirm">Confirm</button><button class="ra-btn ra-ignore">Ignore</button><button class="ra-btn ra-investigate">Investigate</button></div></td>
+            </tr>
+            <tr onclick="openPanel('iis-80')">
+              <td class="check-cell"><input type="checkbox"></td>
+              <td class="mono">17 Oct 2024</td>
+              <td class="tbl-name">IIS</td>
+              <td class="mono">10.0</td>
+              <td>WebServer</td>
+              <td class="mono">80</td>
+              <td class="mono" style="font-size:10px">40.101.27.212</td>
+              <td style="font-size:11px;color:var(--text-3)">PNB</td>
+              <td><span style="font-family:'Rubik',sans-serif;font-size:16px;font-weight:700;color:var(--risk-high)">7.8</span></td>
+              <td><div class="row-actions"><button class="ra-btn ra-confirm">Confirm</button><button class="ra-btn ra-ignore">Ignore</button><button class="ra-btn ra-investigate">Investigate</button></div></td>
+            </tr>
+            <tr onclick="openPanel('openresty-2087')">
+              <td class="check-cell"><input type="checkbox"></td>
+              <td class="mono">06 Mar 2026</td>
+              <td class="tbl-name">OpenResty</td>
+              <td class="mono">1.27.1.1</td>
+              <td>Web Server</td>
+              <td class="mono">2087</td>
+              <td class="mono" style="font-size:10px">66.68.262.93</td>
+              <td style="font-size:11px;color:var(--text-3)">PNB</td>
+              <td><span style="font-family:'Rubik',sans-serif;font-size:16px;font-weight:700;color:var(--risk-critical)">9.1</span></td>
+              <td><div class="row-actions"><button class="ra-btn ra-confirm">Confirm</button><button class="ra-btn ra-ignore">Ignore</button><button class="ra-btn ra-investigate">Investigate</button></div></td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="pagination">
+          <div class="pg-btn active">1</div><div class="pg-btn">2</div><div class="pg-btn">3</div><div class="pg-btn">→</div>
+          <div class="pg-info">Showing 1–3 of 52 software</div>
+        </div>
+      </div>
+
+    </div><!-- /g-card -->
+  </div><!-- /page-inventory -->
+
+  <!-- ══════════════════════════
+       ASSET DISCOVERY PAGE
+  ══════════════════════════ -->
+  <div class="page" id="page-discovery">
+    <div class="page-header">
+      <div>
+        <div class="page-title">Asset Discovery</div>
+        <div class="page-sub">Track newly discovered domains, certificates, IPs and services</div>
+      </div>
+    </div>
+
+    <!-- Hero search -->
+    <div class="disc-search-hero">
+      <div style="font-size:11px;color:var(--text-3);letter-spacing:1px;text-transform:uppercase;margin-bottom:12px">🔍 Cyber Intelligence Search</div>
+      <div class="disc-search-input">
+        <span style="font-size:18px;color:var(--text-3)">⌕</span>
+        <input type="text" placeholder="Search domain, URL, IP, IoC, email, certificate hash, or keyword…" style="font-size:14px">
+        <div style="display:flex;gap:6px;flex-shrink:0">
+          <select style="background:rgba(255,255,255,0.06);border:1px solid var(--glass-border);border-radius:6px;padding:6px 10px;font-size:12px;color:var(--text-2);font-family:'IBM Plex Sans', sans-serif;outline:none">
+            <option>All Types</option><option>Domain</option><option>IP</option><option>SSL</option><option>Software</option>
+          </select>
+          <button class="disc-search-btn">Search</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Discovery KPIs -->
+    <div class="disc-kpi-grid">
+      <div class="disc-kpi dk-blue">
+        <div class="disc-kpi-top"><div class="disc-kpi-icon">🌐</div><span class="disc-sev disc-sev-info">Info</span></div>
+        <div class="disc-kpi-val">20</div>
+        <div class="disc-kpi-lbl">Newly Discovered Domains</div>
+        <div class="disc-kpi-growth up">↑ +5 today</div>
+      </div>
+      <div class="disc-kpi dk-gold">
+        <div class="disc-kpi-top"><div class="disc-kpi-icon">🔒</div><span class="disc-sev disc-sev-warn">Warning</span></div>
+        <div class="disc-kpi-val">15</div>
+        <div class="disc-kpi-lbl">New SSL Certificates</div>
+        <div class="disc-kpi-growth up">↑ +3 expiring soon</div>
+      </div>
+      <div class="disc-kpi dk-amber">
+        <div class="disc-kpi-top"><div class="disc-kpi-icon">📡</div><span class="disc-sev disc-sev-warn">Warning</span></div>
+        <div class="disc-kpi-val">34</div>
+        <div class="disc-kpi-lbl">New Exposed IPs</div>
+        <div class="disc-kpi-growth up">↑ +15 this week</div>
+      </div>
+      <div class="disc-kpi dk-danger">
+        <div class="disc-kpi-top"><div class="disc-kpi-icon">⚡</div><span class="disc-sev disc-sev-crit">Critical</span></div>
+        <div class="disc-kpi-val">52</div>
+        <div class="disc-kpi-lbl">Newly Detected Services</div>
+        <div class="disc-kpi-growth up">↑ +10 new</div>
+      </div>
+    </div>
+
+    <!-- 3-col layout -->
+    <div class="disc-layout">
+
+      <!-- Column 1: Filters -->
+      <div class="disc-filters">
+        <div class="disc-filter-title">Discovery Filters</div>
+        <div class="disc-filter-group">
+          <span class="disc-filter-label">Time Range</span>
+          <select class="disc-select"><option>Last 7 days</option><option>Last 30 days</option><option>Last 90 days</option><option>Custom</option></select>
+        </div>
+        <div class="disc-filter-group">
+          <span class="disc-filter-label">Asset Type</span>
+          <select class="disc-select"><option>All Types</option><option>Domains</option><option>SSL</option><option>IP/Subnet</option><option>Software</option></select>
+        </div>
+        <div class="disc-filter-group">
+          <span class="disc-filter-label">Region</span>
+          <select class="disc-select"><option>All Regions</option><option>India</option><option>USA</option><option>Germany</option><option>Singapore</option><option>UAE</option></select>
+        </div>
+        <div class="disc-filter-group">
+          <span class="disc-filter-label">Risk Level</span>
+          <select class="disc-select"><option>All Risk</option><option>Critical</option><option>High</option><option>Medium</option><option>Low</option></select>
+        </div>
+        <div class="separator"></div>
+        <div style="margin-top:12px">
+          <div class="disc-toggle">
+            Show only new
+            <div class="toggle-pill on" onclick="this.classList.toggle('on')"></div>
+          </div>
+          <div class="disc-toggle">
+            Hide false positives
+            <div class="toggle-pill on" onclick="this.classList.toggle('on')"></div>
+          </div>
+        </div>
+        <button class="disc-apply-btn" style="margin-top:12px">Apply Filters</button>
+      </div>
+
+      <!-- Column 2: Results -->
+      <div class="g-card gold-accent">
+        <div class="card-header">
+          <div class="card-title">Discovery Results</div>
+          <div style="display:flex;gap:6px">
+            <span style="font-size:11px;padding:2px 8px;border-radius:10px;background:rgba(58,159,224,0.1);color:var(--info)">New 5</span>
+            <span style="font-size:11px;padding:2px 8px;border-radius:10px;background:rgba(29,184,122,0.1);color:var(--success)">Confirmed 2</span>
+          </div>
+        </div>
+        <div style="display:flex;gap:2px;padding:10px 16px;border-bottom:1px solid var(--glass-border)">
+          <div class="tab active" style="padding:5px 12px;font-size:12px" onclick="switchDiscTab(this,'New')">New</div>
+          <div class="tab" style="padding:5px 12px;font-size:12px" onclick="switchDiscTab(this,'FP')">False Positive</div>
+          <div class="tab" style="padding:5px 12px;font-size:12px" onclick="switchDiscTab(this,'Confirmed')">Confirmed</div>
+          <div class="tab" style="padding:5px 12px;font-size:12px" onclick="switchDiscTab(this,'All')">All</div>
+        </div>
+        <table class="data-tbl">
+          <thead><tr>
+            <th>Asset</th><th>Type</th><th>Status</th><th>Risk</th><th>Detected</th><th>Actions</th>
+          </tr></thead>
+          <tbody>
+            <tr><td class="tbl-name mono" style="font-size:11px">www.cos.pnb.bank.in</td><td><span style="font-size:10px;color:var(--text-3)">Domain</span></td><td><span class="pill pill-new">New</span></td><td><span class="pill pill-medium">Medium</span></td><td class="mono" style="font-size:10px">03 Mar</td><td><div class="row-actions" style="display:flex"><button class="ra-btn ra-confirm">✓</button><button class="ra-btn ra-ignore">✕</button><button class="ra-btn ra-investigate">🔍</button></div></td></tr>
+            <tr><td class="tbl-name mono" style="font-size:11px">postman.pnb.bank.in</td><td><span style="font-size:10px;color:var(--text-3)">Domain</span></td><td><span class="pill pill-new">New</span></td><td><span class="pill pill-high">High</span></td><td class="mono" style="font-size:10px">17 Oct</td><td><div class="row-actions" style="display:flex"><button class="ra-btn ra-confirm">✓</button><button class="ra-btn ra-ignore">✕</button><button class="ra-btn ra-investigate">🔍</button></div></td></tr>
+            <tr><td class="tbl-name mono" style="font-size:11px">proxy.pnb.bank.in</td><td><span style="font-size:10px;color:var(--text-3)">Domain</span></td><td><span class="pill pill-new">New</span></td><td><span class="pill pill-critical">Critical</span></td><td class="mono" style="font-size:10px">17 Nov</td><td><div class="row-actions" style="display:flex"><button class="ra-btn ra-confirm">✓</button><button class="ra-btn ra-ignore">✕</button><button class="ra-btn ra-investigate">🔍</button></div></td></tr>
+            <tr><td class="tbl-name mono" style="font-size:11px">40.104.62.216</td><td><span style="font-size:10px;color:var(--text-3)">IP</span></td><td><span class="pill pill-new">New</span></td><td><span class="pill pill-medium">Medium</span></td><td class="mono" style="font-size:10px">05 Mar</td><td><div class="row-actions" style="display:flex"><button class="ra-btn ra-confirm">✓</button><button class="ra-btn ra-ignore">✕</button><button class="ra-btn ra-investigate">🔍</button></div></td></tr>
+            <tr><td class="tbl-name mono" style="font-size:11px">b7563b98…4a6</td><td><span style="font-size:10px;color:var(--text-3)">SSL</span></td><td><span class="pill pill-new">New</span></td><td><span class="pill pill-high">High</span></td><td class="mono" style="font-size:10px">10 Mar</td><td><div class="row-actions" style="display:flex"><button class="ra-btn ra-confirm">✓</button><button class="ra-btn ra-ignore">✕</button><button class="ra-btn ra-investigate">🔍</button></div></td></tr>
+            <tr><td class="tbl-name mono" style="font-size:11px">OpenResty 1.27</td><td><span style="font-size:10px;color:var(--text-3)">Software</span></td><td><span class="pill pill-new">New</span></td><td><span class="pill pill-critical">Critical</span></td><td class="mono" style="font-size:10px">06 Mar</td><td><div class="row-actions" style="display:flex"><button class="ra-btn ra-confirm">✓</button><button class="ra-btn ra-ignore">✕</button><button class="ra-btn ra-investigate">🔍</button></div></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Column 3: Network Graph -->
+      <div class="graph-wrap">
+        <div class="graph-header">
+          <div class="card-title">Relationship Graph</div>
+          <div class="text-muted" style="margin-top:2px">Click node to explore</div>
+        </div>
+        <div class="graph-canvas-area" id="graph-area">
+          <canvas id="net-graph"></canvas>
+        </div>
+      </div>
+
+    </div><!-- /disc-layout -->
+
+    <!-- INSIGHTS -->
+    <div class="insights-grid">
+      <div class="insight-card">
+        <div class="insight-icon">🎯</div>
+        <div class="insight-title">Most Targeted Region</div>
+        <div class="insight-val" style="color:var(--risk-critical)">India</div>
+        <div class="insight-sub">42 assets · 14 high risk · Nashik cluster active</div>
+      </div>
+      <div class="insight-card">
+        <div class="insight-icon">📈</div>
+        <div class="insight-title">Fastest Growing Attack Surface</div>
+        <div class="insight-val" style="color:var(--risk-medium)">API Endpoints</div>
+        <div class="insight-sub">+7 new APIs detected in the last 30 days</div>
+      </div>
+      <div class="insight-card">
+        <div class="insight-icon">🔁</div>
+        <div class="insight-title">Top Recurring Risky Asset</div>
+        <div class="insight-val" style="color:var(--risk-high)">vpn.company.com</div>
+        <div class="insight-sub">Flagged 4 times · Weak cipher TLS 1.0 detected</div>
+      </div>
+    </div>
+
+  </div><!-- /page-discovery -->
+
+  <!-- ══════════════════════════ CBOM PAGE ══════════════════════════ -->
+  <div class="page" id="page-cbom">
+    <div class="page-header">
+      <div>
+        <div class="page-title">Cryptographic Bill of Materials</div>
+        <div class="page-sub">Inventory of all cryptographic assets and algorithms in use</div>
+      </div>
+      <div class="header-actions">
+        <button class="btn-sm btn-sm-ghost" onclick="alert('Exporting CBOM report...')">⬇ Export CBOM</button>
+        <button class="btn-sm btn-sm-gold" onclick="alert('Scanning for new crypto assets...')">⟳ Refresh Scan</button>
+      </div>
+    </div>
+
+    <!-- CBOM KPI row -->
+    <div class="kpi-grid" style="margin-bottom:24px;">
+      <div class="kpi-card k-blue">
+        <div class="kpi-top"><div class="kpi-icon k-blue">🔑</div><div class="kpi-trend up">↑ +4</div></div>
+        <div class="kpi-value">84</div>
+        <div class="kpi-label">Total Crypto Assets</div>
+      </div>
+      <div class="kpi-card k-gold">
+        <div class="kpi-top"><div class="kpi-icon k-gold">⚙</div><div class="kpi-trend down">↑ +2</div></div>
+        <div class="kpi-value">12</div>
+        <div class="kpi-label">Algorithm Types</div>
+      </div>
+      <div class="kpi-card k-amber">
+        <div class="kpi-top"><div class="kpi-icon k-amber">⚠</div><div class="kpi-trend down">↑ +3</div></div>
+        <div class="kpi-value">19</div>
+        <div class="kpi-label">Vulnerable Algorithms</div>
+      </div>
+      <div class="kpi-card k-danger">
+        <div class="kpi-top"><div class="kpi-icon k-danger">🚨</div><div class="kpi-trend down">↑ +1</div></div>
+        <div class="kpi-value">6</div>
+        <div class="kpi-label">Quantum-Vulnerable</div>
+      </div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+
+      <!-- Algorithm inventory table -->
+      <div class="g-card gold-accent" style="grid-column:1/-1;">
+        <div class="card-header">
+          <div class="card-title">Algorithm Inventory</div>
+          <span class="card-badge">84 entries</span>
+        </div>
+        <div class="data-table-wrap">
+          <table class="data-tbl">
+            <thead><tr>
+              <th>Algorithm</th><th>Type</th><th>Key Size</th><th>Usage Count</th><th>Quantum Safe</th><th>Status</th><th>Actions</th>
+            </tr></thead>
+            <tbody>
+              <tr onclick="openPanel('RSA-2048')"><td class="tbl-name">RSA-2048</td><td>Asymmetric</td><td class="mono">2048-bit</td><td>34</td><td><span class="pill pill-critical">Vulnerable</span></td><td><span class="pill pill-high">High Risk</span></td><td><div class="row-actions"><button class="ra-btn ra-investigate">Migrate</button></div></td></tr>
+              <tr onclick="openPanel('AES-256-GCM')"><td class="tbl-name">AES-256-GCM</td><td>Symmetric</td><td class="mono">256-bit</td><td>52</td><td><span class="pill pill-confirmed">Safe</span></td><td><span class="pill pill-low">Compliant</span></td><td><div class="row-actions"><button class="ra-btn ra-confirm">View</button></div></td></tr>
+              <tr onclick="openPanel('ECDSA-P256')"><td class="tbl-name">ECDSA P-256</td><td>Asymmetric</td><td class="mono">256-bit</td><td>18</td><td><span class="pill pill-critical">Vulnerable</span></td><td><span class="pill pill-medium">Medium</span></td><td><div class="row-actions"><button class="ra-btn ra-investigate">Migrate</button></div></td></tr>
+              <tr onclick="openPanel('SHA-256')"><td class="tbl-name">SHA-256</td><td>Hash</td><td class="mono">256-bit</td><td>89</td><td><span class="pill pill-confirmed">Safe</span></td><td><span class="pill pill-low">Compliant</span></td><td><div class="row-actions"><button class="ra-btn ra-confirm">View</button></div></td></tr>
+              <tr onclick="openPanel('TLS-1.2')"><td class="tbl-name">TLS 1.2</td><td>Protocol</td><td class="mono">Varies</td><td>27</td><td><span class="pill pill-medium">Partial</span></td><td><span class="pill pill-medium">Review</span></td><td><div class="row-actions"><button class="ra-btn ra-investigate">Upgrade</button></div></td></tr>
+              <tr onclick="openPanel('CRYSTALS-Kyber')"><td class="tbl-name">CRYSTALS-Kyber</td><td>PQC KEM</td><td class="mono">1184-bit</td><td>5</td><td><span class="pill pill-confirmed">PQC Ready</span></td><td><span class="pill pill-low">Active</span></td><td><div class="row-actions"><button class="ra-btn ra-confirm">View</button></div></td></tr>
+              <tr onclick="openPanel('CRYSTALS-Dilithium')"><td class="tbl-name">CRYSTALS-Dilithium</td><td>PQC Signature</td><td class="mono">1312-bit</td><td>3</td><td><span class="pill pill-confirmed">PQC Ready</span></td><td><span class="pill pill-low">Active</span></td><td><div class="row-actions"><button class="ra-btn ra-confirm">View</button></div></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Crypto by category -->
+      <div class="g-card">
+        <div class="card-header"><div class="card-title">Crypto by Category</div></div>
+        <div class="card-body">
+          <div class="risk-row"><div class="risk-label">Symmetric</div><div class="risk-track"><div class="risk-fill" style="width:62%;background:var(--info)"></div></div><div class="risk-pct">52</div></div>
+          <div class="risk-row"><div class="risk-label">Asymmetric</div><div class="risk-track"><div class="risk-fill" style="width:40%;background:var(--risk-high)"></div></div><div class="risk-pct">34</div></div>
+          <div class="risk-row"><div class="risk-label">Hash</div><div class="risk-track"><div class="risk-fill" style="width:30%;background:var(--gold)"></div></div><div class="risk-pct">25</div></div>
+          <div class="risk-row"><div class="risk-label">PQC</div><div class="risk-track"><div class="risk-fill" style="width:10%;background:var(--success)"></div></div><div class="risk-pct">8</div></div>
+          <div class="risk-row"><div class="risk-label">Protocol</div><div class="risk-track"><div class="risk-fill" style="width:12%;background:var(--text-3)"></div></div><div class="risk-pct">10</div></div>
+        </div>
+      </div>
+
+      <!-- Migration priority -->
+      <div class="g-card">
+        <div class="card-header"><div class="card-title">Migration Priority</div><span class="card-badge" style="color:var(--risk-critical);background:rgba(255,59,74,0.1)">6 urgent</span></div>
+        <div class="card-body">
+          <div class="cert-item"><div class="cert-dot-wrap" style="background:rgba(255,59,74,0.1)">🔴</div><div class="cert-info"><div class="cert-name">RSA-2048 → Kyber-1024</div><div class="cert-days">34 assets affected · Priority: Critical</div></div><div class="cert-count" style="color:var(--risk-critical)">34</div></div>
+          <div class="cert-item"><div class="cert-dot-wrap" style="background:rgba(255,122,47,0.1)">🟠</div><div class="cert-info"><div class="cert-name">ECDSA P-256 → Dilithium3</div><div class="cert-days">18 assets affected · Priority: High</div></div><div class="cert-count" style="color:var(--risk-high)">18</div></div>
+          <div class="cert-item"><div class="cert-dot-wrap" style="background:rgba(240,180,41,0.1)">🟡</div><div class="cert-info"><div class="cert-name">TLS 1.2 → TLS 1.3</div><div class="cert-days">27 services affected · Priority: Medium</div></div><div class="cert-count" style="color:var(--risk-medium)">27</div></div>
+        </div>
+      </div>
+    </div>
+  </div><!-- /page-cbom -->
+
+  <!-- ══════════════════════════ PQC POSTURE PAGE ══════════════════════════ -->
+  <div class="page" id="page-pqc">
+    <div class="page-header">
+      <div>
+        <div class="page-title">Posture of PQC</div>
+        <div class="page-sub">Post-Quantum Cryptography readiness across the enterprise</div>
+      </div>
+      <div class="header-actions">
+        <button class="btn-sm btn-sm-ghost" onclick="alert('Generating PQC report...')">⬇ Export Report</button>
+        <button class="btn-sm btn-sm-gold" onclick="alert('Running PQC assessment...')">⟳ Run Assessment</button>
+      </div>
+    </div>
+
+    <!-- PQC KPIs -->
+    <div class="kpi-grid" style="margin-bottom:24px;">
+      <div class="kpi-card k-blue">
+        <div class="kpi-top"><div class="kpi-icon k-blue">🛡</div><div class="kpi-trend up">↑ +5%</div></div>
+        <div class="kpi-value">23%</div>
+        <div class="kpi-label">PQC Readiness Score</div>
+      </div>
+      <div class="kpi-card k-gold">
+        <div class="kpi-top"><div class="kpi-icon k-gold">✓</div><div class="kpi-trend up">↑ +3</div></div>
+        <div class="kpi-value">8</div>
+        <div class="kpi-label">PQC-Ready Assets</div>
+      </div>
+      <div class="kpi-card k-amber">
+        <div class="kpi-top"><div class="kpi-icon k-amber">⚙</div><div class="kpi-trend down">↓ 0</div></div>
+        <div class="kpi-value">52</div>
+        <div class="kpi-label">In Migration</div>
+      </div>
+      <div class="kpi-card k-danger">
+        <div class="kpi-top"><div class="kpi-icon k-danger">⚠</div><div class="kpi-trend down">↑ 0</div></div>
+        <div class="kpi-value">68</div>
+        <div class="kpi-label">Not PQC Ready</div>
+      </div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:1.5fr 1fr;gap:16px;">
+
+      <!-- PQC Readiness by domain -->
+      <div class="g-card gold-accent">
+        <div class="card-header"><div class="card-title">Readiness by Business Domain</div></div>
+        <div class="card-body">
+          <div style="display:flex;flex-direction:column;gap:14px;">
+            <div><div style="display:flex;justify-content:space-between;margin-bottom:5px;font-size:12px;"><span style="color:var(--text-2);font-family:'IBM Plex Sans',sans-serif;">Internet Banking</span><span style="font-family:'IBM Plex Mono',monospace;color:var(--text-1);">18%</span></div><div class="risk-track"><div class="risk-fill" style="width:18%;background:var(--risk-critical)"></div></div></div>
+            <div><div style="display:flex;justify-content:space-between;margin-bottom:5px;font-size:12px;"><span style="color:var(--text-2);font-family:'IBM Plex Sans',sans-serif;">Corporate Banking</span><span style="font-family:'IBM Plex Mono',monospace;color:var(--text-1);">31%</span></div><div class="risk-track"><div class="risk-fill" style="width:31%;background:var(--risk-high)"></div></div></div>
+            <div><div style="display:flex;justify-content:space-between;margin-bottom:5px;font-size:12px;"><span style="color:var(--text-2);font-family:'IBM Plex Sans',sans-serif;">Mobile Banking</span><span style="font-family:'IBM Plex Mono',monospace;color:var(--text-1);">44%</span></div><div class="risk-track"><div class="risk-fill" style="width:44%;background:var(--risk-medium)"></div></div></div>
+            <div><div style="display:flex;justify-content:space-between;margin-bottom:5px;font-size:12px;"><span style="color:var(--text-2);font-family:'IBM Plex Sans',sans-serif;">Internal Infrastructure</span><span style="font-family:'IBM Plex Mono',monospace;color:var(--text-1);">62%</span></div><div class="risk-track"><div class="risk-fill" style="width:62%;background:var(--info)"></div></div></div>
+            <div><div style="display:flex;justify-content:space-between;margin-bottom:5px;font-size:12px;"><span style="color:var(--text-2);font-family:'IBM Plex Sans',sans-serif;">API Gateway</span><span style="font-family:'IBM Plex Mono',monospace;color:var(--text-1);">78%</span></div><div class="risk-track"><div class="risk-fill" style="width:78%;background:var(--success)"></div></div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Migration timeline -->
+      <div class="g-card">
+        <div class="card-header"><div class="card-title">Migration Timeline</div></div>
+        <div class="card-body">
+          <div class="cert-item"><div class="cert-dot-wrap" style="background:rgba(29,184,122,0.1)">✓</div><div class="cert-info"><div class="cert-name">Phase 1 — Discovery</div><div class="cert-days">Completed · Jan 2026</div></div><div class="cert-count" style="color:var(--success)">✓</div></div>
+          <div class="cert-item"><div class="cert-dot-wrap" style="background:rgba(74,159,255,0.1)">⟳</div><div class="cert-info"><div class="cert-name">Phase 2 — Assessment</div><div class="cert-days">In progress · Mar 2026</div></div><div class="cert-count" style="color:var(--info)">52%</div></div>
+          <div class="cert-item"><div class="cert-dot-wrap" style="background:rgba(240,180,41,0.1)">⏳</div><div class="cert-info"><div class="cert-name">Phase 3 — Migration</div><div class="cert-days">Planned · Q3 2026</div></div><div class="cert-count" style="color:var(--risk-medium)">Q3</div></div>
+          <div class="cert-item"><div class="cert-dot-wrap" style="background:rgba(82,96,128,0.1)">◯</div><div class="cert-info"><div class="cert-name">Phase 4 — Validation</div><div class="cert-days">Planned · Q4 2026</div></div><div class="cert-count" style="color:var(--text-3)">Q4</div></div>
+        </div>
+      </div>
+
+      <!-- PQC Algorithm adoption table -->
+      <div class="g-card" style="grid-column:1/-1;">
+        <div class="card-header"><div class="card-title">PQC Algorithm Adoption Status</div><span class="card-badge">NIST Standards</span></div>
+        <div class="data-table-wrap">
+          <table class="data-tbl">
+            <thead><tr><th>Algorithm</th><th>Standard</th><th>Type</th><th>Security Level</th><th>Adoption</th><th>Status</th></tr></thead>
+            <tbody>
+              <tr><td class="tbl-name">CRYSTALS-Kyber</td><td class="mono">FIPS 203</td><td>Key Encapsulation</td><td><span class="pill pill-low">Level 3</span></td><td><div style="display:flex;align-items:center;gap:8px;"><div class="risk-track" style="width:80px;"><div class="risk-fill" style="width:40%;background:var(--info)"></div></div><span class="mono">40%</span></div></td><td><span class="pill pill-new">Deploying</span></td></tr>
+              <tr><td class="tbl-name">CRYSTALS-Dilithium</td><td class="mono">FIPS 204</td><td>Digital Signature</td><td><span class="pill pill-low">Level 3</span></td><td><div style="display:flex;align-items:center;gap:8px;"><div class="risk-track" style="width:80px;"><div class="risk-fill" style="width:25%;background:var(--info)"></div></div><span class="mono">25%</span></div></td><td><span class="pill pill-new">Deploying</span></td></tr>
+              <tr><td class="tbl-name">SPHINCS+</td><td class="mono">FIPS 205</td><td>Digital Signature</td><td><span class="pill pill-medium">Level 1</span></td><td><div style="display:flex;align-items:center;gap:8px;"><div class="risk-track" style="width:80px;"><div class="risk-fill" style="width:5%;background:var(--risk-medium)"></div></div><span class="mono">5%</span></div></td><td><span class="pill pill-fp">Planned</span></td></tr>
+              <tr><td class="tbl-name">FALCON</td><td class="mono">Draft</td><td>Digital Signature</td><td><span class="pill pill-low">Level 5</span></td><td><div style="display:flex;align-items:center;gap:8px;"><div class="risk-track" style="width:80px;"><div class="risk-fill" style="width:0%;background:var(--success)"></div></div><span class="mono">0%</span></div></td><td><span class="pill pill-fp">Evaluating</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div><!-- /page-pqc -->
+
+  <!-- ══════════════════════════ CYBER RATING PAGE ══════════════════════════ -->
+  <div class="page" id="page-cyberrating">
+    <div class="page-header">
+      <div>
+        <div class="page-title">Cyber Rating</div>
+        <div class="page-sub">Overall security posture score and peer benchmarking</div>
+      </div>
+      <div class="header-actions">
+        <button class="btn-sm btn-sm-ghost" onclick="alert('Exporting cyber rating report...')">⬇ Export</button>
+        <button class="btn-sm btn-sm-gold" onclick="alert('Recalculating cyber rating...')">⟳ Recalculate</button>
+      </div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:320px 1fr;gap:16px;margin-bottom:16px;">
+
+      <!-- Big rating card -->
+      <div class="g-card gold-accent" style="display:flex;flex-direction:column;align-items:center;justify-content:center;padding:36px 24px;text-align:center;">
+        <div style="font-family:'IBM Plex Sans',sans-serif;font-size:10px;font-weight:600;color:var(--text-3);letter-spacing:2px;text-transform:uppercase;margin-bottom:16px;">Overall Cyber Rating</div>
+        <div style="width:140px;height:140px;border-radius:50%;border:6px solid rgba(74,159,255,0.2);display:flex;align-items:center;justify-content:center;position:relative;margin-bottom:16px;background:rgba(74,159,255,0.05);">
+          <div style="text-align:center;">
+            <div style="font-family:'Rubik',sans-serif;font-size:56px;font-weight:900;color:#4a9fff;line-height:1;letter-spacing:-3px;">B+</div>
+          </div>
+          <svg style="position:absolute;inset:-6px;width:calc(100% + 12px);height:calc(100% + 12px);" viewBox="0 0 152 152"><circle cx="76" cy="76" r="70" fill="none" stroke="#4a9fff" stroke-width="6" stroke-dasharray="308 440" stroke-dashoffset="-40" stroke-linecap="round" opacity="0.7"/></svg>
+        </div>
+        <div style="font-family:'Rubik',sans-serif;font-size:28px;font-weight:800;color:var(--text-1);letter-spacing:-1px;">672 <span style="font-size:14px;color:var(--text-3);font-weight:400;">/ 1000</span></div>
+        <div style="font-family:'IBM Plex Sans',sans-serif;font-size:11px;color:var(--success);margin-top:6px;letter-spacing:0.5px;">↑ +18 points from last scan</div>
+      </div>
+
+      <!-- Category breakdown -->
+      <div class="g-card">
+        <div class="card-header"><div class="card-title">Score Breakdown by Category</div></div>
+        <div class="card-body">
+          <div style="display:flex;flex-direction:column;gap:12px;">
+            <div><div style="display:flex;justify-content:space-between;margin-bottom:5px;font-size:12px;"><span style="color:var(--text-2);font-family:'IBM Plex Sans',sans-serif;">Network Security</span><span style="font-family:'Rubik',sans-serif;font-weight:700;color:var(--success);">82 / 100</span></div><div class="risk-track"><div class="risk-fill" style="width:82%;background:var(--success)"></div></div></div>
+            <div><div style="display:flex;justify-content:space-between;margin-bottom:5px;font-size:12px;"><span style="color:var(--text-2);font-family:'IBM Plex Sans',sans-serif;">Cryptographic Hygiene</span><span style="font-family:'Rubik',sans-serif;font-weight:700;color:var(--risk-medium);">54 / 100</span></div><div class="risk-track"><div class="risk-fill" style="width:54%;background:var(--risk-medium)"></div></div></div>
+            <div><div style="display:flex;justify-content:space-between;margin-bottom:5px;font-size:12px;"><span style="color:var(--text-2);font-family:'IBM Plex Sans',sans-serif;">Certificate Management</span><span style="font-family:'Rubik',sans-serif;font-weight:700;color:var(--risk-high);">61 / 100</span></div><div class="risk-track"><div class="risk-fill" style="width:61%;background:var(--risk-high)"></div></div></div>
+            <div><div style="display:flex;justify-content:space-between;margin-bottom:5px;font-size:12px;"><span style="color:var(--text-2);font-family:'IBM Plex Sans',sans-serif;">PQC Readiness</span><span style="font-family:'Rubik',sans-serif;font-weight:700;color:var(--risk-critical);">23 / 100</span></div><div class="risk-track"><div class="risk-fill" style="width:23%;background:var(--risk-critical)"></div></div></div>
+            <div><div style="display:flex;justify-content:space-between;margin-bottom:5px;font-size:12px;"><span style="color:var(--text-2);font-family:'IBM Plex Sans',sans-serif;">Access Control</span><span style="font-family:'Rubik',sans-serif;font-weight:700;color:var(--success);">88 / 100</span></div><div class="risk-track"><div class="risk-fill" style="width:88%;background:var(--success)"></div></div></div>
+            <div><div style="display:flex;justify-content:space-between;margin-bottom:5px;font-size:12px;"><span style="color:var(--text-2);font-family:'IBM Plex Sans',sans-serif;">Patch Management</span><span style="font-family:'Rubik',sans-serif;font-weight:700;color:var(--info);">74 / 100</span></div><div class="risk-track"><div class="risk-fill" style="width:74%;background:var(--info)"></div></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Peer benchmarking -->
+    <div class="g-card gold-accent">
+      <div class="card-header"><div class="card-title">Peer Benchmarking — Banking Sector</div><span class="card-badge">India PSB Peers</span></div>
+      <div class="data-table-wrap">
+        <table class="data-tbl">
+          <thead><tr><th>Institution</th><th>Rating</th><th>Score</th><th>PQC Ready</th><th>Risk Level</th><th>Trend</th></tr></thead>
+          <tbody>
+            <tr style="background:rgba(74,159,255,0.05);"><td class="tbl-name" style="color:var(--gold-light);">Punjab National Bank ★</td><td><span style="font-family:'Rubik',sans-serif;font-weight:800;color:#4a9fff;">B+</span></td><td class="mono">672</td><td><span class="pill pill-new">23%</span></td><td><span class="pill pill-medium">Medium</span></td><td style="color:var(--success);font-family:'IBM Plex Mono',monospace;">↑ +18</td></tr>
+            <tr><td class="tbl-name">State Bank of India</td><td><span style="font-family:'Rubik',sans-serif;font-weight:800;color:var(--success);">A-</span></td><td class="mono">741</td><td><span class="pill pill-confirmed">41%</span></td><td><span class="pill pill-low">Low</span></td><td style="color:var(--success);font-family:'IBM Plex Mono',monospace;">↑ +7</td></tr>
+            <tr><td class="tbl-name">Bank of Baroda</td><td><span style="font-family:'Rubik',sans-serif;font-weight:800;color:var(--risk-medium);">B</span></td><td class="mono">638</td><td><span class="pill pill-new">18%</span></td><td><span class="pill pill-medium">Medium</span></td><td style="color:var(--risk-critical);font-family:'IBM Plex Mono',monospace;">↓ -4</td></tr>
+            <tr><td class="tbl-name">Canara Bank</td><td><span style="font-family:'Rubik',sans-serif;font-weight:800;color:var(--risk-medium);">B-</span></td><td class="mono">601</td><td><span class="pill pill-fp">9%</span></td><td><span class="pill pill-high">High</span></td><td style="color:var(--risk-critical);font-family:'IBM Plex Mono',monospace;">↓ -11</td></tr>
+            <tr><td class="tbl-name">Union Bank of India</td><td><span style="font-family:'Rubik',sans-serif;font-weight:800;color:var(--risk-high);">C+</span></td><td class="mono">558</td><td><span class="pill pill-fp">6%</span></td><td><span class="pill pill-critical">Critical</span></td><td style="color:var(--success);font-family:'IBM Plex Mono',monospace;">↑ +2</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div><!-- /page-cyberrating -->
+
+  <!-- ══════════════════════════ REPORTING PAGE ══════════════════════════ -->
+  <div class="page" id="page-reporting">
+    <div class="page-header">
+      <div>
+        <div class="page-title">Reporting</div>
+        <div class="page-sub">Generate, schedule and download security reports</div>
+      </div>
+      <div class="header-actions">
+        <button class="btn-sm btn-sm-ghost" onclick="alert('Scheduling report...')">📅 Schedule Report</button>
+        <button class="btn-sm btn-sm-gold" onclick="alert('Generating all reports...')">⬇ Generate All</button>
+      </div>
+    </div>
+
+    <!-- Report summary KPIs -->
+    <div class="kpi-grid" style="margin-bottom:24px;">
+      <div class="kpi-card k-blue">
+        <div class="kpi-top"><div class="kpi-icon k-blue">📄</div><div class="kpi-trend up">↑ +3</div></div>
+        <div class="kpi-value">24</div>
+        <div class="kpi-label">Reports Generated</div>
+      </div>
+      <div class="kpi-card k-gold">
+        <div class="kpi-top"><div class="kpi-icon k-gold">📅</div></div>
+        <div class="kpi-value">6</div>
+        <div class="kpi-label">Scheduled Reports</div>
+      </div>
+      <div class="kpi-card k-amber">
+        <div class="kpi-top"><div class="kpi-icon k-amber">⏳</div></div>
+        <div class="kpi-value">2</div>
+        <div class="kpi-label">Pending Generation</div>
+      </div>
+      <div class="kpi-card k-danger">
+        <div class="kpi-top"><div class="kpi-icon k-danger">🔔</div></div>
+        <div class="kpi-value">1</div>
+        <div class="kpi-label">Overdue Reports</div>
+      </div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+
+      <!-- Available report types -->
+      <div class="g-card gold-accent">
+        <div class="card-header"><div class="card-title">Available Report Types</div></div>
+        <div style="padding:8px;">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:8px;">
+            <div class="insight-card" onclick="alert('Generating Executive Summary report...')">
+              <div class="insight-icon">📊</div>
+              <div class="insight-title">Executive Summary</div>
+              <div class="insight-sub">High-level posture overview for leadership</div>
+              <button class="btn-sm btn-sm-gold" style="margin-top:10px;width:100%;justify-content:center;" onclick="event.stopPropagation();alert('Generating Executive Summary...')">Generate</button>
+            </div>
+            <div class="insight-card" onclick="alert('Generating Technical Audit report...')">
+              <div class="insight-icon">🔍</div>
+              <div class="insight-title">Technical Audit</div>
+              <div class="insight-sub">Detailed asset & vulnerability findings</div>
+              <button class="btn-sm btn-sm-gold" style="margin-top:10px;width:100%;justify-content:center;" onclick="event.stopPropagation();alert('Generating Technical Audit...')">Generate</button>
+            </div>
+            <div class="insight-card" onclick="alert('Generating CBOM Report...')">
+              <div class="insight-icon">🔑</div>
+              <div class="insight-title">CBOM Report</div>
+              <div class="insight-sub">Cryptographic asset inventory</div>
+              <button class="btn-sm btn-sm-gold" style="margin-top:10px;width:100%;justify-content:center;" onclick="event.stopPropagation();alert('Generating CBOM Report...')">Generate</button>
+            </div>
+            <div class="insight-card" onclick="alert('Generating PQC Readiness Report...')">
+              <div class="insight-icon">⚛</div>
+              <div class="insight-title">PQC Readiness</div>
+              <div class="insight-sub">Post-quantum migration status</div>
+              <button class="btn-sm btn-sm-gold" style="margin-top:10px;width:100%;justify-content:center;" onclick="event.stopPropagation();alert('Generating PQC Readiness...')">Generate</button>
+            </div>
+            <div class="insight-card" onclick="alert('Generating Compliance Report...')">
+              <div class="insight-icon">✅</div>
+              <div class="insight-title">Compliance Report</div>
+              <div class="insight-sub">RBI / CERT-In regulatory mapping</div>
+              <button class="btn-sm btn-sm-gold" style="margin-top:10px;width:100%;justify-content:center;" onclick="event.stopPropagation();alert('Generating Compliance...')">Generate</button>
+            </div>
+            <div class="insight-card" onclick="alert('Generating Cyber Rating Report...')">
+              <div class="insight-icon">🏆</div>
+              <div class="insight-title">Cyber Rating</div>
+              <div class="insight-sub">Score trends and peer benchmarking</div>
+              <button class="btn-sm btn-sm-gold" style="margin-top:10px;width:100%;justify-content:center;" onclick="event.stopPropagation();alert('Generating Cyber Rating...')">Generate</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Recent reports -->
+      <div class="g-card">
+        <div class="card-header"><div class="card-title">Recent Reports</div><span class="card-badge">Last 30 days</span></div>
+        <div class="data-table-wrap">
+          <table class="data-tbl">
+            <thead><tr><th>Report</th><th>Type</th><th>Generated</th><th>Size</th><th>Actions</th></tr></thead>
+            <tbody>
+              <tr><td class="tbl-name">Executive Summary — Mar 2026</td><td><span class="pill pill-new">Executive</span></td><td class="mono text-muted">23 Mar 2026</td><td class="mono">2.4 MB</td><td><div class="row-actions"><button class="ra-btn" onclick="alert('Downloading report...')">⬇ Download</button><button class="ra-btn" onclick="alert('Sharing report...')">Share</button></div></td></tr>
+              <tr><td class="tbl-name">CBOM Audit — Mar 2026</td><td><span class="pill pill-confirmed">CBOM</span></td><td class="mono text-muted">20 Mar 2026</td><td class="mono">5.1 MB</td><td><div class="row-actions"><button class="ra-btn" onclick="alert('Downloading report...')">⬇ Download</button><button class="ra-btn" onclick="alert('Sharing report...')">Share</button></div></td></tr>
+              <tr><td class="tbl-name">Technical Audit — Feb 2026</td><td><span class="pill pill-high">Technical</span></td><td class="mono text-muted">28 Feb 2026</td><td class="mono">8.7 MB</td><td><div class="row-actions"><button class="ra-btn" onclick="alert('Downloading report...')">⬇ Download</button><button class="ra-btn" onclick="alert('Sharing report...')">Share</button></div></td></tr>
+              <tr><td class="tbl-name">PQC Readiness — Feb 2026</td><td><span class="pill pill-medium">PQC</span></td><td class="mono text-muted">15 Feb 2026</td><td class="mono">3.2 MB</td><td><div class="row-actions"><button class="ra-btn" onclick="alert('Downloading report...')">⬇ Download</button><button class="ra-btn" onclick="alert('Sharing report...')">Share</button></div></td></tr>
+              <tr><td class="tbl-name">Compliance Report — Jan 2026</td><td><span class="pill pill-fp">Compliance</span></td><td class="mono text-muted">31 Jan 2026</td><td class="mono">4.8 MB</td><td><div class="row-actions"><button class="ra-btn" onclick="alert('Downloading report...')">⬇ Download</button><button class="ra-btn" onclick="alert('Sharing report...')">Share</button></div></td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Scheduled reports -->
+        <div class="card-header" style="margin-top:8px;"><div class="card-title">Scheduled Reports</div></div>
+        <div class="card-body">
+          <div class="activity-item"><div class="act-icon" style="background:rgba(74,159,255,0.15);color:#4a9fff;">📅</div><div class="act-text"><strong>Executive Summary</strong> — Monthly · Next: 1 Apr 2026</div><div class="act-time">Auto</div></div>
+          <div class="activity-item"><div class="act-icon" style="background:rgba(29,184,122,0.15);color:var(--success);">📅</div><div class="act-text"><strong>CBOM Report</strong> — Weekly · Next: 30 Mar 2026</div><div class="act-time">Auto</div></div>
+          <div class="activity-item"><div class="act-icon" style="background:rgba(240,180,41,0.15);color:var(--risk-medium);">📅</div><div class="act-text"><strong>Compliance Report</strong> — Quarterly · Next: 30 Jun 2026</div><div class="act-time">Auto</div></div>
+        </div>
+      </div>
+    </div>
+  </div><!-- /page-reporting -->
+
+</div><!-- /main-area -->
+</div><!-- /app -->
+
+<!-- DETAIL PANEL -->
+<div class="detail-panel" id="detail-panel">
+  <button class="panel-close" onclick="closePanel()">✕</button>
+  <div class="panel-title" id="panel-title">Asset Details</div>
+  <div class="panel-sub" id="panel-sub">Detailed information and history</div>
+  <div class="panel-section">
+    <div class="panel-section-title">Asset Information</div>
+    <div class="detail-row"><div class="detail-key">Asset Name</div><div class="detail-val" id="pd-name">—</div></div>
+    <div class="detail-row"><div class="detail-key">Type</div><div class="detail-val">Domain</div></div>
+    <div class="detail-row"><div class="detail-key">Company</div><div class="detail-val">Punjab National Bank</div></div>
+    <div class="detail-row"><div class="detail-key">Risk Level</div><div class="detail-val"><span class="pill pill-high">High</span></div></div>
+    <div class="detail-row"><div class="detail-key">Status</div><div class="detail-val"><span class="pill pill-new">New</span></div></div>
+    <div class="detail-row"><div class="detail-key">Registrar</div><div class="detail-val">National Internet Exchange of India</div></div>
+    <div class="detail-row"><div class="detail-key">Registered</div><div class="detail-val">22 Mar 2021</div></div>
+    <div class="detail-row"><div class="detail-key">IPv4 Address</div><div class="detail-val mono">103.25.151.22</div></div>
+    <div class="detail-row"><div class="detail-key">ASN</div><div class="detail-val mono">AS9583</div></div>
+  </div>
+  <div class="panel-section">
+    <div class="panel-section-title">Scan History</div>
+    <div class="panel-timeline">
+      <div class="ptl-item"><div class="ptl-dot"></div><div><div class="ptl-text">Full TLS scan completed — Weak cipher detected</div><div class="ptl-time">23 Mar 2026 · 14:32 IST</div></div></div>
+      <div class="ptl-item"><div class="ptl-dot" style="background:var(--text-3);box-shadow:none"></div><div><div class="ptl-text">Asset first discovered via DNS enumeration</div><div class="ptl-time">17 Oct 2024 · 09:12 IST</div></div></div>
+      <div class="ptl-item"><div class="ptl-dot" style="background:var(--text-3);box-shadow:none"></div><div><div class="ptl-text">Certificate expiry warning triggered</div><div class="ptl-time">10 Mar 2026 · 11:45 IST</div></div></div>
+    </div>
+  </div>
+  <div class="panel-section">
+    <div class="panel-section-title">Associated Assets</div>
+    <div style="font-size:12px;color:var(--text-3)">
+      <div style="padding:6px 0;border-bottom:1px solid var(--glass-border)">🌐 103.25.151.22 · IP Address</div>
+      <div style="padding:6px 0;border-bottom:1px solid var(--glass-border)">🔒 b7563b98… · SSL Certificate</div>
+      <div style="padding:6px 0">🖥 Apache — WebServer on port 443</div>
+    </div>
+  </div>
+  <div class="panel-section">
+    <div class="panel-section-title">Risk Summary</div>
+    <div style="background:rgba(255,122,47,0.08);border:1px solid rgba(255,122,47,0.2);border-radius:10px;padding:12px;font-size:12px;color:var(--text-2);line-height:1.6">
+      ⚠ This asset uses TLS 1.0 with weak CBC cipher suites. Forward secrecy is not enabled. Recommend immediate upgrade to TLS 1.3 with ECDHE key exchange.
+    </div>
+  </div>
+  <button class="panel-action-btn pab-primary">🔍 Run Targeted Scan</button>
+  <button class="panel-action-btn pab-ghost">✓ Mark as Confirmed</button>
+  <button class="panel-action-btn pab-ghost">✕ Mark as False Positive</button>
+</div>
+
+<script>
+/* ══════════════════ HERO SPLASH ══════════════════ */
+function enterDashboard() {
+  const splash = document.getElementById('hero-splash');
+  splash.style.transition = 'opacity 0.7s ease, transform 0.7s ease';
+  splash.style.opacity = '0';
+  splash.style.transform = 'scale(1.03)';
+  setTimeout(() => { splash.style.display = 'none'; }, 720);
+}
+
+/* ══════════════════ NAVIGATION ══════════════════ */
+function showPage(name, navEl) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  const page = document.getElementById('page-' + name);
+  if (page) page.classList.add('active');
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  if (navEl) {
+    navEl.classList.add('active');
+  } else {
+    const map = { home:0, inventory:1, discovery:2, cbom:3, pqc:4, cyberrating:5, reporting:6 };
+    const items = document.querySelectorAll('.nav-item');
+    if (items[map[name] !== undefined ? map[name] : 0]) {
+      items[map[name] !== undefined ? map[name] : 0].classList.add('active');
+    }
+  }
+}
+
+/* ══════════════════ SPARKLINES ══════════════════ */
+function drawSparkline(canvasId, data, color, fillColor) {
+  const canvas = document.getElementById(canvasId);
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  const w = canvas.width, h = canvas.height;
+  ctx.clearRect(0, 0, w, h);
+  const min = Math.min(...data), max = Math.max(...data);
+  const range = max - min || 1;
+  const pts = data.map((v, i) => [i * (w / (data.length - 1)), h - ((v - min) / range) * (h - 4) - 2]);
+
+  // Fill
+  ctx.beginPath();
+  ctx.moveTo(pts[0][0], h);
+  pts.forEach(([x, y]) => ctx.lineTo(x, y));
+  ctx.lineTo(pts[pts.length - 1][0], h);
+  ctx.closePath();
+  ctx.fillStyle = fillColor;
+  ctx.fill();
+
+  // Line
+  ctx.beginPath();
+  pts.forEach(([x, y], i) => i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y));
+  ctx.strokeStyle = color;
+  ctx.lineWidth = 1.5;
+  ctx.lineJoin = 'round';
+  ctx.stroke();
+}
+
+const spData = {
+  sp1: [90, 100, 95, 110, 115, 120, 128],
+  sp2: [35, 38, 36, 40, 40, 41, 42],
+  sp3: [5, 7, 8, 9, 9, 10, 9],
+  sp4: [16, 15, 17, 16, 16, 15, 14],
+  isp1: [12, 14, 13, 16, 17, 18, 20],
+  isp2: [10, 12, 11, 13, 14, 14, 15],
+  isp3: [18, 20, 22, 25, 28, 30, 34],
+  isp4: [40, 42, 44, 46, 48, 50, 52],
+};
+const spColors = {
+  sp1: ['#4a9fff', 'rgba(74,159,255,0.15)'],
+  sp2: ['#7bbfff', 'rgba(123,191,255,0.15)'],
+  sp3: ['#E07B12', 'rgba(224,123,18,0.15)'],
+  sp4: ['#FF3B4A', 'rgba(255,59,74,0.15)'],
+  isp1: ['#4a9fff', 'rgba(74,159,255,0.15)'],
+  isp2: ['#2d7ae0', 'rgba(45,122,224,0.15)'],
+  isp3: ['#E07B12', 'rgba(224,123,18,0.15)'],
+  isp4: ['#1DB87A', 'rgba(29,184,122,0.15)'],
+};
+Object.keys(spData).forEach(id => {
+  const [c, f] = spColors[id];
+  drawSparkline(id, spData[id], c, f);
+});
+
+/* ══════════════════ INVENTORY TABS ══════════════════ */
+function switchInvTab(tabName, kpiEl) {
+  ['domains','ssl','ip','software'].forEach(t => {
+    const el = document.getElementById('inv-' + t);
+    const tab = document.getElementById('tab-' + t);
+    if (el) el.style.display = (t === tabName) ? '' : 'none';
+    if (tab) tab.classList.toggle('active', t === tabName);
+  });
+  document.querySelectorAll('.inv-kpi').forEach(k => k.classList.remove('active'));
+  if (kpiEl) kpiEl.classList.add('active');
+}
+
+/* ══════════════════ DISCOVERY TABS ══════════════════ */
+function switchDiscTab(el, filter) {
+  document.querySelectorAll('.disc-layout .tab').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+}
+
+/* ══════════════════ DETAIL PANEL ══════════════════ */
+function openPanel(assetName) {
+  document.getElementById('panel-title').textContent = assetName;
+  document.getElementById('panel-sub').textContent = 'Detailed information and scan history';
+  document.getElementById('pd-name').textContent = assetName;
+  document.getElementById('detail-panel').classList.add('open');
+}
+function closePanel() {
+  document.getElementById('detail-panel').classList.remove('open');
+}
+
+/* ══════════════════ NETWORK GRAPH ══════════════════ */
+function initNetworkGraph() {
+  const canvas = document.getElementById('net-graph');
+  const area = document.getElementById('graph-area');
+  if (!canvas || !area) return;
+  canvas.width = area.clientWidth || 300;
+  canvas.height = area.clientHeight || 400;
+  const ctx = canvas.getContext('2d');
+  const W = canvas.width, H = canvas.height;
+
+  const nodes = [
+    {x:W*0.5,  y:H*0.5,  r:18, color:'#1e4fa8', glow:'rgba(30,79,168,0.5)', label:'SCAN', type:'core'},
+    {x:W*0.25, y:H*0.25, r:13, color:'#4a9fff', glow:'rgba(74,159,255,0.4)', label:'Domain'},
+    {x:W*0.7,  y:H*0.2,  r:12, color:'#4a9fff', glow:'rgba(74,159,255,0.4)', label:'Domain'},
+    {x:W*0.15, y:H*0.6,  r:11, color:'#2d7ae0', glow:'rgba(45,122,224,0.4)', label:'SSL'},
+    {x:W*0.8,  y:H*0.5,  r:11, color:'#2d7ae0', glow:'rgba(45,122,224,0.4)', label:'SSL'},
+    {x:W*0.35, y:H*0.75, r:12, color:'#1DB87A', glow:'rgba(29,184,122,0.4)', label:'IP'},
+    {x:W*0.65, y:H*0.75, r:12, color:'#1DB87A', glow:'rgba(29,184,122,0.4)', label:'IP'},
+    {x:W*0.1,  y:H*0.35, r:9,  color:'#526080', glow:'rgba(82,96,128,0.3)', label:'Svc'},
+    {x:W*0.88, y:H*0.3,  r:9,  color:'#526080', glow:'rgba(82,96,128,0.3)', label:'Svc'},
+    {x:W*0.5,  y:H*0.12, r:10, color:'#FF3B4A', glow:'rgba(255,59,74,0.5)', label:'Risk'},
+  ];
+
+  const edges = [[0,1],[0,2],[0,3],[0,4],[0,5],[0,6],[1,7],[2,8],[1,3],[2,4],[5,3],[6,4],[0,9]];
+
+  let selected = null;
+  let animT = 0;
+
+  function draw() {
+    ctx.clearRect(0, 0, W, H);
+
+    // Draw edges
+    edges.forEach(([a, b]) => {
+      const na = nodes[a], nb = nodes[b];
+      const isSelected = selected !== null && (selected === a || selected === b);
+      ctx.beginPath();
+      ctx.moveTo(na.x, na.y);
+      ctx.lineTo(nb.x, nb.y);
+      ctx.strokeStyle = isSelected
+        ? 'rgba(74,159,255,0.6)'
+        : 'rgba(255,255,255,0.07)';
+      ctx.lineWidth = isSelected ? 1.5 : 0.8;
+
+      // animated dash
+      ctx.setLineDash([4, 8]);
+      ctx.lineDashOffset = -animT * 0.3;
+      ctx.stroke();
+      ctx.setLineDash([]);
+    });
+
+    // Draw nodes
+    nodes.forEach((n, i) => {
+      const isSelected = selected === i;
+      const pulse = isSelected ? Math.sin(animT * 0.08) * 4 : 0;
+
+      // Glow
+      const grad = ctx.createRadialGradient(n.x, n.y, 0, n.x, n.y, n.r + 10 + pulse);
+      grad.addColorStop(0, n.glow);
+      grad.addColorStop(1, 'transparent');
+      ctx.beginPath();
+      ctx.arc(n.x, n.y, n.r + 10 + pulse, 0, Math.PI * 2);
+      ctx.fillStyle = grad;
+      ctx.fill();
+
+      // Circle
+      ctx.beginPath();
+      ctx.arc(n.x, n.y, n.r + (isSelected ? 3 : 0), 0, Math.PI * 2);
+      ctx.fillStyle = n.color;
+      ctx.globalAlpha = 0.9;
+      ctx.fill();
+      ctx.globalAlpha = 1;
+
+      // Border
+      ctx.beginPath();
+      ctx.arc(n.x, n.y, n.r + (isSelected ? 3 : 0), 0, Math.PI * 2);
+      ctx.strokeStyle = isSelected ? '#4a9fff' : 'rgba(255,255,255,0.15)';
+      ctx.lineWidth = isSelected ? 2 : 0.8;
+      ctx.stroke();
+
+      // Label
+      ctx.font = `${isSelected ? 600 : 400} 9px 'IBM Plex Sans', sans-serif`;
+      ctx.fillStyle = '#fff';
+      ctx.textAlign = 'center';
+      ctx.fillText(n.label, n.x, n.y + 3);
+
+      // Pulse ring for core
+      if (n.type === 'core') {
+        const pRad = n.r + 8 + Math.sin(animT * 0.05) * 5;
+        ctx.beginPath();
+        ctx.arc(n.x, n.y, pRad, 0, Math.PI * 2);
+        ctx.strokeStyle = `rgba(30,79,168,${0.3 + Math.sin(animT * 0.05) * 0.2})`;
+        ctx.lineWidth = 1;
+        ctx.stroke();
+      }
+    });
+
+    animT++;
+    requestAnimationFrame(draw);
+  }
+
+  canvas.addEventListener('click', e => {
+    const rect = canvas.getBoundingClientRect();
+    const mx = (e.clientX - rect.left) * (canvas.width / rect.width);
+    const my = (e.clientY - rect.top) * (canvas.height / rect.height);
+    let hit = null;
+    nodes.forEach((n, i) => {
+      const d = Math.sqrt((mx - n.x) ** 2 + (my - n.y) ** 2);
+      if (d < n.r + 8) hit = i;
+    });
+    selected = (selected === hit) ? null : hit;
+    if (hit !== null && hit !== 0) {
+      openPanel(nodes[hit].label + ' — node ' + hit);
+    }
+  });
+
+  canvas.style.cursor = 'crosshair';
+  draw();
+}
+
+// Init graph after DOM is ready
+window.addEventListener('load', () => {
+  initNetworkGraph();
+});
+
+// Close panel on outside click
+document.addEventListener('click', e => {
+  const panel = document.getElementById('detail-panel');
+  if (panel.classList.contains('open') && !panel.contains(e.target) && !e.target.closest('tr')) {
+    closePanel();
+  }
+});
+</script>
+</body>
+</html>
